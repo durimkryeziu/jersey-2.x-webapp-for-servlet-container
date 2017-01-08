@@ -1,4 +1,4 @@
-# Jersey 2.x Webapp deployable in a Servlet Container
+# Sample Jersey 2.x Web Application
 Sample Jersey 2.x Web Application that can be deployed in a Servlet Container
 
 ## License
