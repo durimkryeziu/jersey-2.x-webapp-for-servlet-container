@@ -27,7 +27,14 @@ public class SampleApplicationDestroyListener implements DestroyListener {
 
         DataSource.close();
 
-        // Deregistering JDBC drivers
+        deregisterJdbcDrivers();
+
+        System.out.println("Application '"
+                + applicationInfo.getResourceConfig().getApplicationName()
+                + "' destroyed.");
+    }
+
+    private void deregisterJdbcDrivers() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Enumeration<Driver> drivers = DriverManager.getDrivers();
 
@@ -35,7 +42,6 @@ public class SampleApplicationDestroyListener implements DestroyListener {
             Driver driver = drivers.nextElement();
             if (driver.getClass().getClassLoader() == classLoader) {
                 try {
-
                     System.out.println(String.format("Deregistering JDBC driver: %s v%d.%d",
                             driver.getClass().getName(),
                             driver.getMajorVersion(),
@@ -48,9 +54,5 @@ public class SampleApplicationDestroyListener implements DestroyListener {
                 }
             }
         }
-
-        System.out.println("Application '"
-                + applicationInfo.getResourceConfig().getApplicationName()
-                + "' destroyed.");
     }
 }

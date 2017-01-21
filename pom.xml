@@ -7,7 +7,23 @@
     <artifactId>sample-jersey-2.x-webapp</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>sample-jersey-2.x-webapp</name>
+
+    <name>Jersey RESTful Web Application</name>
+    <description>Sample Jersey 2.x Web Application that can be deployed in a Servlet Container</description>
+
+    <licenses>
+        <license>
+            <name>Unlicense</name>
+            <url>http://unlicense.org</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>durimkryeziu</id>
+            <name>Durim Kryeziu</name>
+        </developer>
+    </developers>
 
     <properties>
         <jersey.version>2.25</jersey.version>
@@ -32,12 +48,16 @@
             <artifactId>jersey-container-servlet</artifactId>
         </dependency>
 
-        <!-- uncomment this to get JSON support
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
-        -->
+
+        <dependency>
+            <groupId>org.adeptnet</groupId>
+            <artifactId>sql</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -53,7 +73,7 @@
     </dependencies>
 
     <build>
-        <finalName>sample-jersey-2.x-webapp</finalName>
+        <finalName>sample-jersey-webapp</finalName>
 
         <plugins>
             <plugin>

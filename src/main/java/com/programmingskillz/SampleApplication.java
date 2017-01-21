@@ -12,7 +12,7 @@ import javax.ws.rs.ApplicationPath;
 public class SampleApplication extends ResourceConfig {
 
     public SampleApplication() {
-        setApplicationName("Jersey RESTful Web App");
+        setApplicationName("Jersey RESTful Webapp");
         packages(this.getClass().getPackage().getName()); // in this case i.e com.programmingskillz
 
         property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
