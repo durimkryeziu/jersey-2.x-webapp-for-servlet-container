@@ -1,5 +1,6 @@
 package com.programmingskillz.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -7,15 +8,15 @@ import java.util.List;
  */
 public interface Repository<T> {
 
-    T save(T entity);
+    T save(T entity) throws SQLException;
 
-    T findOne(String id);
+    T findOne(String id) throws SQLException;
 
-    List<T> findAll();
+    List<T> findAll() throws SQLException;
 
-    T update(T entity);
+    T update(T entity) throws SQLException;
 
-    void delete(String id);
+    void delete(String id) throws SQLException;
 
-    void deleteAll();
+    void deleteAll() throws SQLException;
 }

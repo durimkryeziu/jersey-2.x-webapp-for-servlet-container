@@ -1,6 +1,7 @@
 package com.programmingskillz.repository;
 
 import com.programmingskillz.domain.Book;
+import com.programmingskillz.exceptions.BookNotFoundException;
 import org.adeptnet.sql.NamedParameterStatement;
 
 import java.sql.Connection;
@@ -14,8 +15,7 @@ import java.util.*;
 public class BookRepository implements Repository<Book> {
 
     @Override
-    public Book save(Book entity) {
-        Book book = null;
+    public Book save(Book entity) throws SQLException {
 
         String sql = "INSERT INTO books (id, title, author, description, isbn, pages, publisher, published) " +
                 "VALUES(:id, :title, :author, :description, :isbn, :pages, :publisher, :published);";
@@ -37,20 +37,13 @@ public class BookRepository implements Repository<Book> {
             nps.setAll(params);
 
             nps.executeUpdate();
-            book = entity;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
+            return entity;
         }
-
-        return book;
     }
 
     @Override
-    public Book findOne(String id) {
-        Book book = null;
+    public Book findOne(String id) throws SQLException {
+        Book book;
 
         String sql = "SELECT * FROM books WHERE id = :id";
 
@@ -59,7 +52,7 @@ public class BookRepository implements Repository<Book> {
             nps.setString("id", id);
 
             ResultSet rs = nps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 book = new Book();
                 book.setId(id);
                 book.setTitle(rs.getString("title"));
@@ -69,20 +62,16 @@ public class BookRepository implements Repository<Book> {
                 book.setPages(rs.getInt("pages"));
                 book.setPublisher(rs.getString("publisher"));
                 book.setPublished(rs.getDate("published"));
+            } else {
+                throw new BookNotFoundException("Book with id '" + id + "' not found.");
             }
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
+            return book;
         }
-
-        return book;
     }
 
     @Override
-    public List<Book> findAll() {
+    public List<Book> findAll() throws SQLException {
         List<Book> books = new ArrayList<>();
 
         String sql = "SELECT * FROM books";
@@ -104,19 +93,13 @@ public class BookRepository implements Repository<Book> {
                 books.add(book);
             }
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
         }
 
         return books;
     }
 
     @Override
-    public Book update(Book entity) {
-        Book book = null;
+    public Book update(Book entity) throws SQLException {
 
         String sql = "UPDATE books SET title=:title, author=:author, " +
                 "description=:description, isbn=:isbn, pages=:pages, " +
@@ -137,19 +120,12 @@ public class BookRepository implements Repository<Book> {
             nps.setAll(params);
 
             nps.executeUpdate();
-            book = entity;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
+            return entity;
         }
-
-        return book;
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws SQLException {
         String sql = "DELETE FROM books WHERE id=:id";
 
         try (Connection conn = DataSource.getConnection();
@@ -157,27 +133,17 @@ public class BookRepository implements Repository<Book> {
 
             nps.setString("id", id);
             nps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
         }
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
         String sql = "DELETE FROM books";
 
         try (Connection conn = DataSource.getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             nps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            for (Throwable t : e.getSuppressed()) {
-                t.printStackTrace();
-            }
         }
     }
 }
