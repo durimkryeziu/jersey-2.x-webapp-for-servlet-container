@@ -33,7 +33,7 @@ public class DataSource {
     }
 
     static synchronized Connection getConnection() throws SQLException {
-        return hikariDataSource != null ? hikariDataSource.getConnection() : null;
+        return hikariDataSource.getConnection();
     }
 
     public static void close() {
