@@ -3,6 +3,8 @@ package com.programmingskillz.providers;
 import com.programmingskillz.repository.DataSource;
 import org.glassfish.jersey.server.monitoring.ApplicationInfo;
 import org.glassfish.jersey.server.monitoring.DestroyListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.ext.Provider;
@@ -17,6 +19,8 @@ import java.util.Enumeration;
 @Provider
 public class SampleApplicationDestroyListener implements DestroyListener {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SampleApplicationDestroyListener.class);
+
     @Inject
     private javax.inject.Provider<ApplicationInfo> applicationInfoProvider;
 
@@ -29,9 +33,7 @@ public class SampleApplicationDestroyListener implements DestroyListener {
 
         deregisterJdbcDrivers();
 
-        System.out.println("Application '"
-                + applicationInfo.getResourceConfig().getApplicationName()
-                + "' destroyed.");
+        LOGGER.info("Application '{}' destroyed.", applicationInfo.getResourceConfig().getApplicationName());
     }
 
     private void deregisterJdbcDrivers() {
@@ -39,18 +41,18 @@ public class SampleApplicationDestroyListener implements DestroyListener {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
 
         while (drivers.hasMoreElements()) {
+            LOGGER.debug("Deregistering JDBC Drivers:");
             Driver driver = drivers.nextElement();
             if (driver.getClass().getClassLoader() == classLoader) {
                 try {
-                    System.out.println(String.format("Deregistering JDBC driver: %s v%d.%d",
+                    LOGGER.debug("  {} v{}.{}",
                             driver.getClass().getName(),
                             driver.getMajorVersion(),
-                            driver.getMinorVersion()));
+                            driver.getMinorVersion());
 
                     DriverManager.deregisterDriver(driver);
                 } catch (SQLException e) {
-                    System.out.println("Failed to deregister JDBC driver " + driver);
-                    e.printStackTrace();
+                    LOGGER.error("Failed to deregister JDBC driver: ", e);
                 }
             }
         }

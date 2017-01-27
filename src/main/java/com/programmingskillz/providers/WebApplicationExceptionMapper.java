@@ -1,6 +1,8 @@
 package com.programmingskillz.providers;
 
 import com.programmingskillz.exceptions.ErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -17,8 +19,12 @@ import java.util.Map;
 @Provider
 public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplicationException> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebApplicationExceptionMapper.class);
+
     @Override
     public Response toResponse(WebApplicationException exception) {
+
+        LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
         ErrorResponse errorResponse = new ErrorResponse();
 
         Response exceptionResponse = exception.getResponse();
@@ -33,12 +39,17 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
                 .type(MediaType.APPLICATION_JSON);
 
         MultivaluedMap<String, Object> headers = exceptionResponse.getHeaders();
-        for (Map.Entry<String, List<Object>> entry : headers.entrySet()) {
-            List<Object> headerValues = entry.getValue();
-            if (headerValues.size() == 1) {
-                responseBuilder.header(entry.getKey(), headerValues.get(0));
-            } else {
-                responseBuilder.header(entry.getKey(), headerValues);
+        if (headers.size() > 0) {
+            LOGGER.debug("Adding headers:");
+            for (Map.Entry<String, List<Object>> entry : headers.entrySet()) {
+                String headerKey = entry.getKey();
+                List<Object> headerValues = entry.getValue();
+                LOGGER.debug("  {} -> {}", headerKey, headerValues);
+                if (headerValues.size() == 1) {
+                    responseBuilder.header(headerKey, headerValues.get(0));
+                } else {
+                    responseBuilder.header(headerKey, headerValues);
+                }
             }
         }
 
