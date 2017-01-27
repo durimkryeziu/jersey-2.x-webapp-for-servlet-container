@@ -3,6 +3,8 @@ package com.programmingskillz.repository;
 import com.programmingskillz.domain.Book;
 import com.programmingskillz.exceptions.BookNotFoundException;
 import org.adeptnet.sql.NamedParameterStatement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +15,8 @@ import java.util.*;
  * @author Durim Kryeziu
  */
 public class BookRepository implements Repository<Book> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookRepository.class);
 
     @Override
     public Book save(Book entity) throws SQLException {
@@ -38,6 +42,9 @@ public class BookRepository implements Repository<Book> {
 
             nps.executeUpdate();
             return entity;
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
     }
 
@@ -67,6 +74,9 @@ public class BookRepository implements Repository<Book> {
             }
             rs.close();
             return book;
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
     }
 
@@ -77,9 +87,9 @@ public class BookRepository implements Repository<Book> {
         String sql = "SELECT * FROM books";
 
         try (Connection conn = DataSource.getConnection();
-             NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
+             NamedParameterStatement nps = new NamedParameterStatement(conn, sql);
+             ResultSet rs = nps.executeQuery()) {
 
-            ResultSet rs = nps.executeQuery();
             while (rs.next()) {
                 Book book = new Book();
                 book.setId(rs.getString("id"));
@@ -92,7 +102,9 @@ public class BookRepository implements Repository<Book> {
                 book.setPublished(rs.getDate("published"));
                 books.add(book);
             }
-            rs.close();
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
 
         return books;
@@ -121,6 +133,9 @@ public class BookRepository implements Repository<Book> {
 
             nps.executeUpdate();
             return entity;
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
     }
 
@@ -133,6 +148,9 @@ public class BookRepository implements Repository<Book> {
 
             nps.setString("id", id);
             nps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
     }
 
@@ -144,6 +162,9 @@ public class BookRepository implements Repository<Book> {
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             nps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("SQLException:", e);
+            throw e;
         }
     }
 }

@@ -2,6 +2,8 @@ package com.programmingskillz.repository;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +16,12 @@ import java.util.Properties;
  */
 public class DataSource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataSource.class);
+
     private static HikariDataSource hikariDataSource;
 
     public static void init() {
-        System.out.println("Initializing HikariCP...");
+        LOGGER.info("Initializing HikariCP...");
 
         Properties prop = new Properties();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -25,7 +29,7 @@ public class DataSource {
         try {
             prop.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("IOException:", e);
         }
 
         HikariConfig config = new HikariConfig(prop);

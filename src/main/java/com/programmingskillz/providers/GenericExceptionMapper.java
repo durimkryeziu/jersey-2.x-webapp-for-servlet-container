@@ -1,6 +1,8 @@
 package com.programmingskillz.providers;
 
 import com.programmingskillz.exceptions.ErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,8 +15,12 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericExceptionMapper.class);
+
     @Override
     public Response toResponse(Throwable exception) {
+
+        LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
 
         ErrorResponse errorResponse = new ErrorResponse();
@@ -35,6 +41,5 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
                 .entity(errorResponse)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
-
     }
 }

@@ -1,0 +1,65 @@
+Configuration:
+  name: SampleLoggingConfig
+  status: DEBUG
+
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%highlight{%d{MMM dd, yyyy HH:mm:ss} %-5level [%t] %c{1}: %msg%n}"
+
+    RollingFile:
+      - name: INFO_FILE
+        fileName: ../logs/info-logs.log
+        filePattern: "../logs/archive/info-logs-%i.log.gz"
+        immediateFlush: false
+        PatternLayout:
+          pattern: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%t] %c{10} - %msg%n"
+        Filters:
+          ThresholdFilter:
+          - level: WARN
+            onMatch: "DENY"
+            onMismatch: "NEUTRAL"
+          - level: INFO
+            onMatch: "ACCEPT"
+            onMismatch: "DENY"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 250MB
+        DefaultRolloverStrategy:
+          max: 4
+
+      - name: ERROR_FILE
+        fileName: ../logs/error-logs.log
+        filePattern: "../logs/archive/error-logs-%i.log.gz"
+        immediateFlush: true
+        createOnDemand: true  # create file when errors occur
+        PatternLayout:
+          pattern: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%t] %c{10} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 100MB
+        DefaultRolloverStrategy:
+          max: 10
+
+  Loggers:
+    Root:
+      level: DEBUG
+      AppenderRef:
+       - ref: CONSOLE
+       - ref: INFO_FILE
+         level: INFO
+       - ref: ERROR_FILE
+         level: ERROR
+
+    Logger:
+      - name: com.programmingskillz
+        additivity: false
+        level: DEBUG
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: INFO_FILE
+            level: INFO
+          - ref: ERROR_FILE
+            level: ERROR

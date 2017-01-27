@@ -2,6 +2,8 @@ package com.programmingskillz.providers;
 
 import com.programmingskillz.exceptions.BookNotFoundException;
 import com.programmingskillz.exceptions.ErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,8 +16,13 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class BookNotFoundExceptionMapper implements ExceptionMapper<BookNotFoundException> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookNotFoundExceptionMapper.class);
+
     @Override
     public Response toResponse(BookNotFoundException exception) {
+
+        LOGGER.error("BookNotFoundException:", exception);
+        LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
         Response.Status status = Response.Status.NOT_FOUND;
 
         ErrorResponse errorResponse = new ErrorResponse();
