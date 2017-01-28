@@ -2,6 +2,15 @@ Configuration:
   name: SampleLoggingConfig
   status: DEBUG
 
+  Properties:
+    Property:
+      - name: logs_path
+        value: "${env:CATALINA_HOME}/logs"
+      - name: archive
+        value: "${logs_path}/archive"
+      - name: file_pattern_layout
+        value: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%t] %c{10} - %msg%n"
+
   Appenders:
     Console:
       name: CONSOLE
@@ -11,11 +20,11 @@ Configuration:
 
     RollingFile:
       - name: INFO_FILE
-        fileName: ../logs/info-logs.log
-        filePattern: "../logs/archive/info-logs-%i.log.gz"
+        fileName: ${logs_path}/info-logs.log
+        filePattern: ${archive}/info-logs-%i.log.gz
         immediateFlush: false
         PatternLayout:
-          pattern: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%t] %c{10} - %msg%n"
+          pattern: ${file_pattern_layout}
         Filters:
           ThresholdFilter:
           - level: WARN
@@ -31,12 +40,12 @@ Configuration:
           max: 4
 
       - name: ERROR_FILE
-        fileName: ../logs/error-logs.log
-        filePattern: "../logs/archive/error-logs-%i.log.gz"
+        fileName: ${logs_path}/error-logs.log
+        filePattern: ${archive}/error-logs-%i.log.gz
         immediateFlush: true
         createOnDemand: true  # create file when errors occur
         PatternLayout:
-          pattern: "%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%t] %c{10} - %msg%n"
+          pattern: ${file_pattern_layout}
         Policies:
           SizeBasedTriggeringPolicy:
             size: 100MB
