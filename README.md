@@ -11,7 +11,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 
 ## Installation
 - git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git
-- Point CATALINA_HOME environment variable to your Servlet Container
+- Point **CATALINA_HOME** environment variable to your Servlet Container
 - Close all other connections to the embedded mode H2 Database if any or modify the hikari.properties file to use the server mode
 - mvn clean install
 - Get the WAR file and deploy it on your favorite Servlet Container and you will be all set up. 
