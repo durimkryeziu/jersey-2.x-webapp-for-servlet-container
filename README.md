@@ -1,4 +1,4 @@
-# Sample Jersey 2.x Web Application
+# Sample Jersey 2.x RESTful Web Application
 Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container. 
 It can be used to help you start a Jersey Webapp quickly with very few modifications on the (NO XML) configuration files.
 
