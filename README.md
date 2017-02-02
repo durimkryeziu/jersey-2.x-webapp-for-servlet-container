@@ -1,5 +1,27 @@
 # Sample Jersey 2.x Web Application
-Sample Jersey 2.x Web Application that can be deployed in a Servlet Container
+Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container. 
+It can be used to help you start a Jersey Webapp quickly with very few modifications on the (NO XML) configuration files.
+
+## Overview
+- Based on Descriptor-less deployment option (No JAX-RS Deployment descriptor)
+- Leverages HikariCP to connect with H2 database (Embedded)
+- Uses YAML syntax for Log4j2 configuration file
+- Uses Jackson Library for data-binding
+- Supports URI-based content negotiation for JSON and XML (yet to come!)
+
+## Installation
+- git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git
+- Point CATALINA_HOME environment variable to your Servlet Container
+- Close all other connections to the embedded mode H2 Database if any or modify the hikari.properties file to use the server mode
+- mvn clean install
+- Get the WAR file and deploy it on your favorite Servlet Container and you will be all set up. 
+
+## References
+- Jersey doc: https://jersey.java.net/documentation/latest/index.html
+- HikariCP: http://http://brettwooldridge.github.io/HikariCP/
+- H2 Database: http://www.h2database.com/html/features.html#embedded_databases
+- SLF4J: https://www.slf4j.org/manual.html
+- Log4j2: https://logging.apache.org/log4j/2.x/manual/index.html 
 
 ## License
 
