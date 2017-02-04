@@ -7,6 +7,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Leverages [HikariCP](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
 - Uses _YAML_ syntax for [Log4j2](src/main/resources/log4j2.yml) configuration file
 - Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
+- Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceTest.java) for testing
 - Supports _URI-based_ content negotiation for _JSON_ and _XML_ (yet to come!)
 
 ## Installation
@@ -14,7 +15,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
 - Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
 - `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/resource/BookResourceTest.java)
-- Get the _WAR_ file and deploy it on your favorite Servlet Container and you will be all set up. 
+- Get the **war** file and deploy it on your favorite Servlet Container and you will be all set up. 
 
 ## References
 - Jersey doc: https://jersey.java.net/documentation/latest/index.html
