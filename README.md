@@ -4,9 +4,9 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 
 ## Overview
 - Based on [Descriptor-less](src/main/webapp) deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
-- Leverages [_HikariCP_](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
-- Uses _YAML_ syntax for [_Log4j2_](src/main/resources/log4j2.yml) configuration file
-- Uses [_Jackson_](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
+- Leverages [HikariCP](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
+- Uses _YAML_ syntax for [Log4j2](src/main/resources/log4j2.yml) configuration file
+- Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
 - Supports _URI-based_ content negotiation for _JSON_ and _XML_ (yet to come!)
 
 ## Installation
