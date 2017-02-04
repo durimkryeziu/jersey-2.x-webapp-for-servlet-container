@@ -1,10 +1,13 @@
 package com.programmingskillz.domain;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import java.time.Instant;
 
 /**
  * @author Durim Kryeziu
  */
+@JsonPropertyOrder({"id", "title", "author", "description", "isbn", "pages", "publisher", "published"})
 public class Book {
 
     private String id;
@@ -12,9 +15,9 @@ public class Book {
     private String author;
     private String description;
     private String isbn;
-    private Integer pages;
     private String publisher;
-    private Date published;
+    private Instant published;
+    private Integer pages;
 
     public String getId() {
         return id;
@@ -72,11 +75,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Date getPublished() {
+    public Instant getPublished() {
         return published;
     }
 
-    public void setPublished(Date published) {
+    public void setPublished(Instant published) {
         this.published = published;
     }
 

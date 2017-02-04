@@ -1,7 +1,6 @@
 package com.programmingskillz;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.programmingskillz.providers.SampleObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.slf4j.Logger;
@@ -21,11 +20,8 @@ public class SampleApplication extends ResourceConfig {
         setApplicationName("Jersey RESTful Webapp");
         packages(this.getClass().getPackage().getName()); // in this case i.e com.programmingskillz
 
-        JacksonJsonProvider jsonProvider = new JacksonJsonProvider()
-                .configure(SerializationFeature.INDENT_OUTPUT, Boolean.TRUE);
-
         LOGGER.debug("Registering JAX-RS Components...");
-        register(jsonProvider);
+        register(SampleObjectMapperProvider.class);
         property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
     }
 }

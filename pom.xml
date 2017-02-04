@@ -45,6 +45,8 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!--Jersey-->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
@@ -55,6 +57,19 @@
             <artifactId>jersey-media-json-jackson</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!--Database-->
         <dependency>
             <groupId>org.adeptnet</groupId>
             <artifactId>sql</artifactId>
@@ -115,7 +130,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        <!--Logging-->
 
     </dependencies>
 

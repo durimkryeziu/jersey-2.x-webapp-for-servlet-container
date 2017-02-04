@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -37,7 +38,7 @@ public class BookRepository implements Repository<Book> {
             params.put("isbn", entity.getIsbn());
             params.put("pages", entity.getPages());
             params.put("publisher", entity.getPublisher());
-            params.put("published", entity.getPublished());
+            params.put("published", entity.getPublished() != null ? Timestamp.from(entity.getPublished()) : null);
             nps.setAll(params);
 
             nps.executeUpdate();
@@ -68,7 +69,7 @@ public class BookRepository implements Repository<Book> {
                 book.setIsbn(rs.getString("isbn"));
                 book.setPages(rs.getInt("pages"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setPublished(rs.getDate("published"));
+                book.setPublished(rs.getTimestamp("published") != null ? rs.getTimestamp("published").toInstant() : null);
             } else {
                 throw new BookNotFoundException("Book with id '" + id + "' not found.");
             }
@@ -99,7 +100,7 @@ public class BookRepository implements Repository<Book> {
                 book.setIsbn(rs.getString("isbn"));
                 book.setPages(rs.getInt("pages"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setPublished(rs.getDate("published"));
+                book.setPublished(rs.getTimestamp("published") != null ? rs.getTimestamp("published").toInstant() : null);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -128,7 +129,7 @@ public class BookRepository implements Repository<Book> {
             params.put("isbn", entity.getIsbn());
             params.put("pages", entity.getPages());
             params.put("publisher", entity.getPublisher());
-            params.put("published", entity.getPublished());
+            params.put("published", entity.getPublished() != null ? Timestamp.from(entity.getPublished()) : null);
             nps.setAll(params);
 
             nps.executeUpdate();
