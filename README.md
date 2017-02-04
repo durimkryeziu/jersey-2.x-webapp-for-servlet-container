@@ -1,19 +1,19 @@
 # Sample Jersey 2.x RESTful Web Application
 Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container. 
-It can be used to help you start a Jersey Webapp quickly with very few modifications on the (NO XML) configuration files.
+It can be used to help you start a Jersey Webapp quickly with very few modifications on the _(NO XML)_ configuration files.
 
 ## Overview
-- Based on Descriptor-less deployment option (No JAX-RS Deployment descriptor)
-- Leverages _HikariCP_ to connect with H2 database (Embedded)
-- Uses _YAML_ syntax for _Log4j2_ configuration file
-- Uses _Jackson_ Library for data-binding
+- Based on [Descriptor-less](src/main/webapp) deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
+- Leverages [_HikariCP_](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
+- Uses _YAML_ syntax for [_Log4j2_](src/main/resources/log4j2.yml) configuration file
+- Uses [_Jackson_](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
 - Supports _URI-based_ content negotiation for _JSON_ and _XML_ (yet to come!)
 
 ## Installation
 - `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
-- Point **CATALINA_HOME** environment variable to your Servlet Container
-- Close all other connections to the embedded mode H2 Database if any or modify the hikari.properties file to use the server mode
-- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip tests
+- Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
+- Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
+- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/resource/BookResourceTest.java)
 - Get the _WAR_ file and deploy it on your favorite Servlet Container and you will be all set up. 
 
 ## References
