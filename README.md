@@ -1,5 +1,5 @@
 # Sample Jersey 2.x RESTful Web Application
-Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container (i.e.[Tomcat 7+](http://tomcat.apache.org/tomcat-7.0-doc/),[Jetty 8+](http://www.eclipse.org/jetty/documentation/),[GlassFish 3.0.1+](https://glassfish.java.net/documentation.html)etc). 
+Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container (i.e. [Tomcat 7+](http://tomcat.apache.org/tomcat-7.0-doc/), [Jetty 8+](http://www.eclipse.org/jetty/documentation/), [GlassFish 3.0.1+](https://glassfish.java.net/documentation.html) etc). 
 It can be used to help you start a Jersey Webapp quickly with very few modifications on the _(NO XML)_ configuration files.
 
 ## Overview
@@ -23,7 +23,8 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - HikariCP: http://http://brettwooldridge.github.io/HikariCP/
 - H2 Database: http://www.h2database.com/html/features.html#embedded_databases
 - SLF4J: https://www.slf4j.org/manual.html
-- Log4j2: https://logging.apache.org/log4j/2.x/manual/index.html 
+- Log4j2: https://logging.apache.org/log4j/2.x/manual/index.html
+- Hibernate Validator: http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/
 
 ## License
 
