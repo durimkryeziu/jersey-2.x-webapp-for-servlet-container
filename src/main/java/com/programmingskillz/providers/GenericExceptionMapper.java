@@ -20,6 +20,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable exception) {
 
+        LOGGER.error("{}:", exception.getClass().getTypeName(), exception);
         LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
         Response.Status status = Response.Status.INTERNAL_SERVER_ERROR;
 

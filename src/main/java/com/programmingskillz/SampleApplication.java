@@ -23,5 +23,6 @@ public class SampleApplication extends ResourceConfig {
         LOGGER.debug("Registering JAX-RS Components...");
         register(SampleObjectMapperProvider.class);
         property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
+        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
     }
 }

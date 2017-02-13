@@ -1,11 +1,14 @@
 package com.programmingskillz.resource;
 
+import com.programmingskillz.constraint.ValidBookToUpdate;
 import com.programmingskillz.domain.Book;
 import com.programmingskillz.service.BookService;
 import com.programmingskillz.service.BookServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
@@ -47,7 +50,9 @@ public class BookResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBook(@Context UriInfo uriInfo, Book book) throws SQLException {
+    public Response createBook(@Context UriInfo uriInfo,
+                               @NotNull(message = "{requestBody.does.not.exist}")
+                               @Valid Book book) throws SQLException {
 
         LOGGER.debug("Inserting book {}", book);
         Book savedBook = bookService.add(book);
@@ -59,7 +64,9 @@ public class BookResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateBook(Book book) throws SQLException {
+    public Response updateBook(@NotNull(message = "{requestBody.does.not.exist}")
+                               @ValidBookToUpdate
+                               @Valid Book book) throws SQLException {
 
         LOGGER.debug("Updating book {}", book);
         Book updatedBook = bookService.update(book);

@@ -1,5 +1,5 @@
 # Sample Jersey 2.x RESTful Web Application
-Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container. 
+Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container (i.e.[Tomcat 7+](http://tomcat.apache.org/tomcat-7.0-doc/),[Jetty 8+](http://www.eclipse.org/jetty/documentation/),[GlassFish 3.0.1+](https://glassfish.java.net/documentation.html)etc). 
 It can be used to help you start a Jersey Webapp quickly with very few modifications on the _(NO XML)_ configuration files.
 
 ## Overview
@@ -8,6 +8,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Uses _YAML_ syntax for [Log4j2](src/main/resources/log4j2.yml) configuration file
 - Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
 - Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceTest.java) for testing
+- Validations are based on [Bean Validation](http://beanvalidation.org/). Uses both [Built-in](src/main/java/com/programmingskillz/domain/Book.java) constraints and [Custom](src/main/java/com/programmingskillz/constraint/ValidIsbn.java) constraints
 - Supports _URI-based_ content negotiation for _JSON_ and _XML_ (yet to come!)
 
 ## Installation
