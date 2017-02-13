@@ -24,6 +24,7 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
     @Override
     public Response toResponse(WebApplicationException exception) {
 
+        LOGGER.error("WebApplicationException:", exception);
         LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
         ErrorResponse errorResponse = new ErrorResponse();
 

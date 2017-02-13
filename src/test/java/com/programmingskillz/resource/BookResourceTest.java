@@ -49,10 +49,10 @@ public class BookResourceTest extends JerseyTest {
     @Before
     public void addBook() {
         Book book = new Book();
-        book.setTitle("Before Book's title");
-        book.setAuthor("Before Book's author");
-        book.setIsbn("123-1234-2333");
-        book.setPages(123);
+        book.setTitle("How to Win Friends & Influence People");
+        book.setAuthor("Dale Carnegie");
+        book.setIsbn("067142517X");
+        book.setPages(299);
 
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
@@ -66,10 +66,10 @@ public class BookResourceTest extends JerseyTest {
     @Test
     public void test1AddBookWithNecessaryFields() {
         Book book = new Book();
-        book.setTitle("This is Book's title");
-        book.setAuthor("This is Book's author");
-        book.setIsbn("123-1234-2333");
-        book.setPages(123);
+        book.setTitle("How to Win Friends & Influence People");
+        book.setAuthor("Dale Carnegie");
+        book.setIsbn("067142517X");
+        book.setPages(299);
 
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
@@ -81,23 +81,27 @@ public class BookResourceTest extends JerseyTest {
 
         Book bookResponse = response.readEntity(Book.class);
 
-        assertEquals("This is Book's title", bookResponse.getTitle());
-        assertEquals("This is Book's author", bookResponse.getAuthor());
-        assertEquals("123-1234-2333", bookResponse.getIsbn());
-        assertEquals(123, bookResponse.getPages().intValue());
+        assertEquals("How to Win Friends & Influence People", bookResponse.getTitle());
+        assertEquals("Dale Carnegie", bookResponse.getAuthor());
+        assertEquals("067142517X", bookResponse.getIsbn());
+        assertEquals(299, bookResponse.getPages().intValue());
     }
 
     @Test
     public void test2AddBookFull() {
         Book book = new Book();
-        book.setTitle("Full Book's title");
-        book.setAuthor("Full Book's author");
-        book.setDescription("Full Book's description");
-        book.setIsbn("12-13-12-1322");
-        book.setPages(254);
-        book.setPublisher("Wox");
+        book.setTitle("The Clean Coder: A Code of Conduct for Professional Programmers");
+        book.setAuthor("Robert C. Martin");
+        book.setDescription("In The Clean Coder: A Code of Conduct for Professional Programmers, " +
+                "legendary software expert Robert C. Martin introduces the disciplines, techniques, " +
+                "tools, and practices of true software craftsmanship. This book is packed with " +
+                "practical advice–about everything from estimating and coding to refactoring and " +
+                "testing.");
+        book.setIsbn("9780137081073");
+        book.setPages(256);
+        book.setPublisher("Prentice Hall");
 
-        Instant date = Instant.now();
+        Instant date = Instant.parse("2011-05-23T00:00:00.00Z");
         book.setPublished(date);
 
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
@@ -110,12 +114,16 @@ public class BookResourceTest extends JerseyTest {
 
         Book bookResponse = response.readEntity(Book.class);
 
-        assertEquals("Full Book's title", bookResponse.getTitle());
-        assertEquals("Full Book's author", bookResponse.getAuthor());
-        assertEquals("Full Book's description", bookResponse.getDescription());
-        assertEquals("12-13-12-1322", bookResponse.getIsbn());
-        assertEquals(254, bookResponse.getPages().intValue());
-        assertEquals("Wox", bookResponse.getPublisher());
+        assertEquals("The Clean Coder: A Code of Conduct for Professional Programmers", bookResponse.getTitle());
+        assertEquals("Robert C. Martin", bookResponse.getAuthor());
+        assertEquals("In The Clean Coder: A Code of Conduct for Professional Programmers, " +
+                "legendary software expert Robert C. Martin introduces the disciplines, techniques, " +
+                "tools, and practices of true software craftsmanship. This book is packed with " +
+                "practical advice–about everything from estimating and coding to refactoring and " +
+                "testing.", bookResponse.getDescription());
+        assertEquals("9780137081073", bookResponse.getIsbn());
+        assertEquals(256, bookResponse.getPages().intValue());
+        assertEquals("Prentice Hall", bookResponse.getPublisher());
         assertEquals(date, bookResponse.getPublished());
     }
 
@@ -199,5 +207,41 @@ public class BookResourceTest extends JerseyTest {
 
         assertNotNull(books);
         assertTrue(books.size() == 0);
+    }
+
+    @Test
+    public void testRequestBodyNull() {
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .post(null);
+
+        assertEquals(400, response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON, response.getHeaderString("Content-Type"));
+
+        String entity = response.readEntity(String.class);
+
+        assertTrue(entity.contains("Request body does not exist."));
+    }
+
+    @Test
+    public void testUpdateWithoutId() {
+        Book book = new Book();
+        book.setTitle("Effective Java (2nd Edition)");
+        book.setAuthor("Joshua Bloch");
+        book.setIsbn("9780321356680");
+        book.setPages(346);
+
+        Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
+
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .put(bookEntity);
+
+        assertEquals(400, response.getStatus());
+        assertEquals(MediaType.APPLICATION_JSON, response.getHeaderString("Content-Type"));
+
+        String entity = response.readEntity(String.class);
+
+        assertTrue(entity.contains("Id cannot be null when you want to update the Book"));
     }
 }

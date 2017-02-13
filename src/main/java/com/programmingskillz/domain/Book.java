@@ -1,7 +1,10 @@
 package com.programmingskillz.domain;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.programmingskillz.constraint.ValidIsbn;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 /**
@@ -11,12 +14,17 @@ import java.time.Instant;
 public class Book {
 
     private String id;
+    @NotNull(message = "{book.title.null}")
     private String title;
+    @NotNull(message = "{book.author.null}")
     private String author;
     private String description;
+    @ValidIsbn
     private String isbn;
     private String publisher;
     private Instant published;
+    @NotNull(message = "{book.pages.null}")
+    @Max(value = 32767, message = "{book.pages.max}")
     private Integer pages;
 
     public String getId() {
