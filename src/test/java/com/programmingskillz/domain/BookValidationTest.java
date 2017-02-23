@@ -1,6 +1,5 @@
-package com.programmingskillz.resource;
+package com.programmingskillz.domain;
 
-import com.programmingskillz.domain.Book;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

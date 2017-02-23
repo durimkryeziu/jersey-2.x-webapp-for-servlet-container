@@ -26,7 +26,7 @@ public class BookResource {
     private BookService bookService = new BookServiceImpl();
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getBooks() throws SQLException {
 
         LOGGER.debug("Getting all books...");
@@ -38,7 +38,7 @@ public class BookResource {
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getBook(@PathParam("id") String id) throws SQLException {
 
         LOGGER.debug("Getting book with id '{}'", id);
@@ -49,7 +49,7 @@ public class BookResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createBook(@Context UriInfo uriInfo,
                                @NotNull(message = "{requestBody.does.not.exist}")
                                @Valid Book book) throws SQLException {
@@ -63,7 +63,7 @@ public class BookResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateBook(@NotNull(message = "{requestBody.does.not.exist}")
                                @ValidBookToUpdate
                                @Valid Book book) throws SQLException {
