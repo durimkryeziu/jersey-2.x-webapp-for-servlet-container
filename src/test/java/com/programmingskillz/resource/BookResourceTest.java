@@ -244,4 +244,15 @@ public class BookResourceTest extends JerseyTest {
 
         assertTrue(entity.contains("Id cannot be null when you want to update the Book"));
     }
+
+    @Test
+    public void testUriBasedContentNegotiation() {
+        Response jsonResponse = target("books").path(".json").request().get();
+
+        assertEquals(MediaType.APPLICATION_JSON, jsonResponse.getHeaderString("Content-Type"));
+
+        Response xmlResponse = target("books").path(".xml").request().get();
+
+        assertEquals(MediaType.APPLICATION_XML, xmlResponse.getHeaderString("Content-Type"));
+    }
 }

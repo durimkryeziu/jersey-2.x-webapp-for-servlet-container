@@ -1,6 +1,7 @@
 package com.programmingskillz.domain;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.programmingskillz.constraint.ValidIsbn;
 
 import javax.validation.constraints.Max;
@@ -11,6 +12,7 @@ import java.time.Instant;
  * @author Durim Kryeziu
  */
 @JsonPropertyOrder({"id", "title", "author", "description", "isbn", "pages", "publisher", "published"})
+@JacksonXmlRootElement(localName = "book")
 public class Book {
 
     private String id;
