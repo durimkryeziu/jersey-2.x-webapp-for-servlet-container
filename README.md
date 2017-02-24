@@ -9,8 +9,8 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
 - Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceTest.java) for testing
 - Validations are based on [Bean Validation](http://beanvalidation.org/). Uses both [Built-in](src/main/java/com/programmingskillz/domain/Book.java) constraints and [Custom](src/main/java/com/programmingskillz/constraint/ValidIsbn.java) constraints
-- Supports _URI-based_ content negotiation for _JSON_ and _XML_
-    
+- Supports _URI-based_ content negotiation for **JSON** and **XML**
+
     `GET /books.json` -- Returns JSON response
     
     `GET /books.xml` -- Returns XML response
