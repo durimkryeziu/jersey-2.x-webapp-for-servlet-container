@@ -43,7 +43,7 @@ public class BookResourceTest extends JerseyTest {
         config.register(SampleObjectMapperProvider.class);
         config.register(JacksonFeature.class);
         config.property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_CLIENT, "INFO");
-        config.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_ANY);
+        config.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_TEXT);
     }
 
     @Before

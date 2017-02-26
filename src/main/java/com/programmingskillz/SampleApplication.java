@@ -2,6 +2,7 @@ package com.programmingskillz;
 
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 import com.programmingskillz.providers.SampleObjectMapperProvider;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.filter.UriConnegFilter;
@@ -36,7 +37,11 @@ public class SampleApplication extends ResourceConfig {
         register(SampleObjectMapperProvider.class);
         register(JacksonXMLProvider.class);
         register(uriConnegFilter);
+        register(LoggingFeature.class);
+
         property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
+        property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_SERVER, "INFO");
+        property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_SERVER, LoggingFeature.Verbosity.HEADERS_ONLY);
     }
 }
