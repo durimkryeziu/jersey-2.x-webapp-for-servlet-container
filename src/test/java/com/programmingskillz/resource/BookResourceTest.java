@@ -255,4 +255,12 @@ public class BookResourceTest extends JerseyTest {
 
         assertEquals(MediaType.APPLICATION_XML, xmlResponse.getHeaderString("Content-Type"));
     }
+
+    @Test
+    public void testPoweredByHeader() {
+        Response response = target("books").request(MediaType.APPLICATION_JSON).get();
+
+        assertNotNull(response.getHeaderString("X-Powered-By"));
+        assertEquals("Jersey Framework", response.getHeaderString("X-Powered-By"));
+    }
 }
