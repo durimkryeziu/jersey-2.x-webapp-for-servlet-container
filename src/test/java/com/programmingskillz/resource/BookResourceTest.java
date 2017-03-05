@@ -6,6 +6,7 @@ import com.programmingskillz.providers.SampleObjectMapperProvider;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.message.GZipEncoder;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Before;
@@ -34,7 +35,6 @@ public class BookResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         enable(TestProperties.LOG_TRAFFIC);
-        enable(TestProperties.DUMP_ENTITY);
         return new SampleApplication();
     }
 
@@ -42,8 +42,9 @@ public class BookResourceTest extends JerseyTest {
     protected void configureClient(ClientConfig config) {
         config.register(SampleObjectMapperProvider.class);
         config.register(JacksonFeature.class);
+        config.register(GZipEncoder.class);
         config.property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_CLIENT, "INFO");
-        config.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.PAYLOAD_TEXT);
+        config.property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_CLIENT, LoggingFeature.Verbosity.HEADERS_ONLY);
     }
 
     @Before
@@ -210,7 +211,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testRequestBodyNull() {
+    public void test8RequestBodyNull() {
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
                 .post(null);
@@ -224,7 +225,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testUpdateWithoutId() {
+    public void test9UpdateWithoutId() {
         Book book = new Book();
         book.setTitle("Effective Java (2nd Edition)");
         book.setAuthor("Joshua Bloch");
@@ -246,7 +247,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testUriBasedContentNegotiation() {
+    public void test10UriBasedContentNegotiation() {
         Response jsonResponse = target("books").path(".json").request().get();
 
         assertEquals(MediaType.APPLICATION_JSON, jsonResponse.getHeaderString("Content-Type"));
@@ -257,7 +258,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testPoweredByHeader() {
+    public void test11PoweredByHeader() {
         Response response = target("books").request(MediaType.APPLICATION_JSON).get();
 
         assertNotNull(response.getHeaderString("X-Powered-By"));
