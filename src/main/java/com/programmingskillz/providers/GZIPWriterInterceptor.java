@@ -1,5 +1,7 @@
 package com.programmingskillz.providers;
 
+import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
@@ -14,6 +16,7 @@ import java.util.zip.GZIPOutputStream;
  */
 @Provider
 @Compress
+@Priority(Priorities.ENTITY_CODER)
 public class GZIPWriterInterceptor implements WriterInterceptor {
 
     @Override

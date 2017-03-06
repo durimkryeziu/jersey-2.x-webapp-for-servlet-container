@@ -1,5 +1,7 @@
 package com.programmingskillz.providers;
 
+import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -10,6 +12,7 @@ import java.io.IOException;
  * @author Durim Kryeziu
  */
 @Provider
+@Priority(Priorities.HEADER_DECORATOR)
 public class PoweredByFilter implements ContainerResponseFilter {
 
     @Override

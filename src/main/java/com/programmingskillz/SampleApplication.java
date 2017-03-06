@@ -1,5 +1,8 @@
 package com.programmingskillz;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 import com.programmingskillz.providers.SampleObjectMapperProvider;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -26,6 +29,14 @@ public class SampleApplication extends ResourceConfig {
         setApplicationName("Jersey RESTful Webapp");
         packages(this.getClass().getPackage().getName()); // in this case i.e com.programmingskillz
 
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.registerModule(new JavaTimeModule());
+
+        JacksonXMLProvider xmlProvider = new JacksonXMLProvider();
+
+        xmlProvider.setMapper(xmlMapper);
+        xmlProvider.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         Map<String, MediaType> mediaTypeMappings = new HashMap<>();
         mediaTypeMappings.put("xml", MediaType.APPLICATION_XML_TYPE);
         mediaTypeMappings.put("json", MediaType.APPLICATION_JSON_TYPE);
@@ -35,7 +46,7 @@ public class SampleApplication extends ResourceConfig {
         LOGGER.debug("Registering JAX-RS Components...");
 
         register(SampleObjectMapperProvider.class);
-        register(JacksonXMLProvider.class);
+        register(xmlProvider);
         register(uriConnegFilter);
         register(LoggingFeature.class);
 

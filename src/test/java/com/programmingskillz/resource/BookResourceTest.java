@@ -54,6 +54,7 @@ public class BookResourceTest extends JerseyTest {
         book.setAuthor("Dale Carnegie");
         book.setIsbn("067142517X");
         book.setPages(299);
+        book.setPublished(Instant.now());
 
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
