@@ -2,6 +2,7 @@ package com.programmingskillz.resource;
 
 import com.programmingskillz.constraint.ValidBookToUpdate;
 import com.programmingskillz.domain.Book;
+import com.programmingskillz.providers.Compress;
 import com.programmingskillz.service.BookService;
 import com.programmingskillz.service.BookServiceImpl;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class BookResource {
     private BookService bookService = new BookServiceImpl();
 
     @GET
+    @Compress
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Response getBooks() throws SQLException {
 
@@ -40,6 +42,7 @@ public class BookResource {
     }
 
     @GET
+    @Compress
     @Path("{id}")
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Response getBook(@PathParam("id") String id) throws SQLException {
@@ -51,6 +54,7 @@ public class BookResource {
     }
 
     @POST
+    @Compress
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Response createBook(@Context UriInfo uriInfo,
@@ -65,6 +69,7 @@ public class BookResource {
     }
 
     @PUT
+    @Compress
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({APPLICATION_JSON, APPLICATION_XML})
     public Response updateBook(@NotNull(message = "{requestBody.does.not.exist}")

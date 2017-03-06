@@ -13,6 +13,7 @@ import java.util.zip.GZIPOutputStream;
  * @author Durim Kryeziu
  */
 @Provider
+@Compress
 public class GZIPWriterInterceptor implements WriterInterceptor {
 
     @Override
