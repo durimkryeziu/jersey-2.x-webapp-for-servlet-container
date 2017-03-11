@@ -15,11 +15,9 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -31,6 +29,7 @@ import static org.junit.Assert.*;
 public class BookResourceTest extends JerseyTest {
 
     private String bookId;
+    private String authHeaderValue;
 
     @Override
     protected Application configure() {
@@ -48,7 +47,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Before
-    public void addBook() {
+    public void addBook() throws Exception {
         Book book = new Book();
         book.setTitle("How to Win Friends & Influence People");
         book.setAuthor("Dale Carnegie");
@@ -56,9 +55,18 @@ public class BookResourceTest extends JerseyTest {
         book.setPages(299);
         book.setPublished(Instant.now());
 
+        String username = "durimkryeziu";
+        String password = "password";
+
+        String encodedString = Base64.getEncoder()
+                .encodeToString(String.format("%s:%s", username, password).getBytes());
+
+        authHeaderValue = String.format("Basic %s", encodedString);
+
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .post(bookEntity);
 
         Book bookResponse = response.readEntity(Book.class);
@@ -66,7 +74,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test1AddBookWithNecessaryFields() {
+    public void test1AddBookWithNecessaryFields() throws Exception {
         Book book = new Book();
         book.setTitle("How to Win Friends & Influence People");
         book.setAuthor("Dale Carnegie");
@@ -76,6 +84,7 @@ public class BookResourceTest extends JerseyTest {
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .post(bookEntity);
 
         assertEquals(201, response.getStatus());
@@ -90,7 +99,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test2AddBookFull() {
+    public void test2AddBookFull() throws Exception {
         Book book = new Book();
         book.setTitle("The Clean Coder: A Code of Conduct for Professional Programmers");
         book.setAuthor("Robert C. Martin");
@@ -109,6 +118,7 @@ public class BookResourceTest extends JerseyTest {
         Entity<Book> bookEntity = Entity.entity(book, MediaType.APPLICATION_JSON);
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .post(bookEntity);
 
         assertEquals(201, response.getStatus());
@@ -130,10 +140,11 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test3GetOneBook() {
+    public void test3GetOneBook() throws Exception {
         Response response = target("books")
                 .path(bookId)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .get();
         assertEquals(200, response.getStatus());
 
@@ -144,9 +155,10 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test4GetAllBooks() {
+    public void test4GetAllBooks() throws Exception {
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .get();
         assertEquals(200, response.getStatus());
 
@@ -159,15 +171,17 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test5UpdateBook() {
+    public void test5UpdateBook() throws Exception {
         Book book = target("books")
                 .path(bookId)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .get(Book.class);
         book.setDescription("Description is updated");
 
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .put(Entity.entity(book, MediaType.APPLICATION_JSON));
 
         assertEquals(200, response.getStatus());
@@ -178,10 +192,11 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test6DeleteOneBook() {
+    public void test6DeleteOneBook() throws Exception {
         Response response = target("books")
                 .path(bookId)
                 .request()
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .delete();
 
         assertEquals(204, response.getStatus());
@@ -189,21 +204,24 @@ public class BookResourceTest extends JerseyTest {
         Response notFoundResponse = target("books")
                 .path(bookId)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .get();
 
         assertEquals(404, notFoundResponse.getStatus());
     }
 
     @Test
-    public void test7DeleteAllBooks() {
+    public void test7DeleteAllBooks() throws Exception {
         Response response = target("books")
                 .request()
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .delete();
 
         assertEquals(204, response.getStatus());
 
         List<Book> books = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .get(new GenericType<List<Book>>() {
                 });
 
@@ -212,9 +230,10 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test8RequestBodyNull() {
+    public void test8RequestBodyNull() throws Exception {
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .post(null);
 
         assertEquals(400, response.getStatus());
@@ -226,7 +245,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test9UpdateWithoutId() {
+    public void test9UpdateWithoutId() throws Exception {
         Book book = new Book();
         book.setTitle("Effective Java (2nd Edition)");
         book.setAuthor("Joshua Bloch");
@@ -237,6 +256,7 @@ public class BookResourceTest extends JerseyTest {
 
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .put(bookEntity);
 
         assertEquals(400, response.getStatus());
@@ -248,21 +268,79 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test10UriBasedContentNegotiation() {
-        Response jsonResponse = target("books").path(".json").request().get();
+    public void testUriBasedContentNegotiation() throws Exception {
+        Response jsonResponse = target("books")
+                .path(".json")
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .get();
 
         assertEquals(MediaType.APPLICATION_JSON, jsonResponse.getHeaderString("Content-Type"));
 
-        Response xmlResponse = target("books").path(".xml").request().get();
+        Response xmlResponse = target("books")
+                .path(".xml")
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .get();
 
         assertEquals(MediaType.APPLICATION_XML, xmlResponse.getHeaderString("Content-Type"));
     }
 
     @Test
-    public void test11PoweredByHeader() {
-        Response response = target("books").request(MediaType.APPLICATION_JSON).get();
+    public void testPoweredByHeader() throws Exception {
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .get();
 
         assertNotNull(response.getHeaderString("X-Powered-By"));
         assertEquals("Jersey Framework", response.getHeaderString("X-Powered-By"));
+    }
+
+    @Test
+    public void shouldNotBeAllowedWithoutBasicAuth() throws Exception {
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        assertEquals(401, response.getStatus());
+        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
+    }
+
+    @Test
+    public void shouldNotBeAllowedWithoutBasicPrefix() throws Exception {
+
+        String username = "durimkryeziu";
+        String password = "password";
+
+        String encodedString = Base64.getEncoder()
+                .encodeToString(String.format("%s:%s", username, password).getBytes());
+
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, encodedString)
+                .get();
+
+        assertEquals(401, response.getStatus());
+        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
+    }
+
+    @Test
+    public void shouldNotBeAllowedWithWrongUsernameOrPassword() throws Exception {
+        String username = "john";
+        String password = "doe";
+
+        String encodedString = Base64.getEncoder()
+                .encodeToString(String.format("%s:%s", username, password).getBytes());
+
+        String authHeaderValue = String.format("Basic %s", encodedString);
+
+        Response response = target("books")
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .get();
+
+        assertEquals(401, response.getStatus());
+        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
     }
 }

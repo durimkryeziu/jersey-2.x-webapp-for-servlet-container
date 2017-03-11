@@ -4,6 +4,7 @@ import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,7 +17,6 @@ import java.util.Base64;
 @PreMatching
 public class AuthFilter implements ContainerRequestFilter {
 
-    private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String AUTHORIZATION_TYPE = "Basic ";
     private static final NotAuthorizedException notAuthorizedException = new NotAuthorizedException("Cannot access the resource!");
     private static final String USERNAME = "durimkryeziu";
@@ -25,9 +25,9 @@ public class AuthFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
-        String auth = requestContext.getHeaderString(AUTHORIZATION_HEADER);
+        String auth = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        if (auth == null || auth.isEmpty()) {
+        if (auth == null || auth.isEmpty() || !auth.startsWith("Basic")) {
             throw notAuthorizedException;
         }
 
