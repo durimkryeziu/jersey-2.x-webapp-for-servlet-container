@@ -9,7 +9,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
 - Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceTest.java) for testing
 - Validations are based on [Bean Validation](http://beanvalidation.org/). Uses both [Built-in](src/main/java/com/programmingskillz/domain/Book.java) constraints and [Custom](src/main/java/com/programmingskillz/constraint/ValidIsbn.java) constraints
-- Utilizes Jersey Filters to support [**Basic Authentication**](src/main/java/com/programmingskillz/providers/AuthFilter.java)
+- Utilizes Jersey Filters to support [Basic Authentication](src/main/java/com/programmingskillz/providers/AuthFilter.java)
 - Supports _URI-based_ content negotiation for **JSON** and **XML**
 
     `GET /books.json` -- Returns JSON response

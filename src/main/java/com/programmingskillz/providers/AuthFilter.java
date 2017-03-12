@@ -1,6 +1,8 @@
 package com.programmingskillz.providers;
 
+import javax.annotation.Priority;
 import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
@@ -15,6 +17,7 @@ import java.util.Base64;
  */
 @Provider
 @PreMatching
+@Priority(Priorities.AUTHENTICATION)
 public class AuthFilter implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_TYPE = "Basic ";
@@ -24,6 +27,10 @@ public class AuthFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+
+        if (requestContext.getUriInfo().getRequestUri().getPath().endsWith("swagger.json")) {
+            return;
+        }
 
         String auth = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 

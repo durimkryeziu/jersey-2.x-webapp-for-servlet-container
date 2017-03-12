@@ -142,6 +142,14 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <!--Documentation-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jersey2-jaxrs</artifactId>
+            <version>1.5.12</version>
+        </dependency>
+
+        <!--Other-->
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
