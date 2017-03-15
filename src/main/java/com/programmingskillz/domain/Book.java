@@ -3,6 +3,8 @@ package com.programmingskillz.domain;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.programmingskillz.constraint.ValidIsbn;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,7 @@ import java.time.Instant;
 /**
  * @author Durim Kryeziu
  */
+@ApiModel(value = "Book", description = "Sample object that represents a book")
 @JsonPropertyOrder({"id", "title", "author", "description", "isbn", "pages", "publisher", "published"})
 @JacksonXmlRootElement(localName = "book")
 public class Book {
@@ -41,6 +44,7 @@ public class Book {
         return title;
     }
 
+    @ApiModelProperty(required = true)
     public void setTitle(String title) {
         this.title = title;
     }
@@ -49,6 +53,7 @@ public class Book {
         return author;
     }
 
+    @ApiModelProperty(required = true)
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -65,6 +70,7 @@ public class Book {
         return isbn;
     }
 
+    @ApiModelProperty(required = true, example = "9780137081073")
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
@@ -73,6 +79,7 @@ public class Book {
         return pages;
     }
 
+    @ApiModelProperty(required = true)
     public void setPages(Integer pages) {
         this.pages = pages;
     }

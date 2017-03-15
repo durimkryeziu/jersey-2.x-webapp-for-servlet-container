@@ -5,6 +5,10 @@ import com.programmingskillz.domain.Book;
 import com.programmingskillz.providers.Compress;
 import com.programmingskillz.service.BookService;
 import com.programmingskillz.service.BookServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +27,7 @@ import static com.programmingskillz.util.CustomMediaType.APPLICATION_XML;
  * @author Durim Kryeziu
  */
 @Path("books")
+@Api(value = "books")
 public class BookResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookResource.class);
@@ -32,6 +37,16 @@ public class BookResource {
     @GET
     @Compress
     @Produces({APPLICATION_JSON, APPLICATION_XML})
+    @ApiOperation(
+            value = "Get all books",
+            notes = "Retrieves all books of the library",
+            response = Book.class,
+            responseContainer = "List")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful retrieval of books"),
+            @ApiResponse(code = 404, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
     public Response getBooks() throws SQLException {
 
         LOGGER.debug("Getting all books...");
