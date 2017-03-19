@@ -36,6 +36,7 @@ public class Book {
         return id;
     }
 
+    @ApiModelProperty(example = "767a463c-4cc3-48c1-b93e-25c0d216032b")
     public void setId(String id) {
         this.id = id;
     }
@@ -44,7 +45,7 @@ public class Book {
         return title;
     }
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "Effective Java (2nd Edition)")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -53,7 +54,7 @@ public class Book {
         return author;
     }
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "Joshua Bloch")
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -70,7 +71,7 @@ public class Book {
         return isbn;
     }
 
-    @ApiModelProperty(required = true, example = "9780137081073")
+    @ApiModelProperty(required = true, example = "9780321356680")
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
@@ -79,7 +80,7 @@ public class Book {
         return pages;
     }
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "364")
     public void setPages(Integer pages) {
         this.pages = pages;
     }
@@ -96,6 +97,7 @@ public class Book {
         return published;
     }
 
+    @ApiModelProperty(example = "2008-05-28T00:00:00Z")
     public void setPublished(Instant published) {
         this.published = published;
     }
