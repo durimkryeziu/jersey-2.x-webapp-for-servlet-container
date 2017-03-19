@@ -21,7 +21,7 @@ import java.util.Base64;
 public class AuthFilter implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_TYPE = "Basic ";
-    private static final NotAuthorizedException notAuthorizedException = new NotAuthorizedException("Cannot access the resource!");
+    private static final NotAuthorizedException notAuthorizedException = new NotAuthorizedException(AUTHORIZATION_TYPE.trim());
     private static final String USERNAME = "durimkryeziu";
     private static final String PASSWORD = "password";
 

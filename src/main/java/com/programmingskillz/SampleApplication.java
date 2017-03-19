@@ -69,7 +69,7 @@ public class SampleApplication extends ResourceConfig {
 
     private void setUpSwagger() {
         BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setTitle("Jersey RESTful Webapp");
+        beanConfig.setTitle("Sample Jersey 2.x RESTful Web Application");
         beanConfig.setDescription("Sample Jersey 2.x Web Application that can be deployed in a Servlet Container");
         beanConfig.setLicense("Unlicense");
         beanConfig.setLicenseUrl("http://unlicense.org");

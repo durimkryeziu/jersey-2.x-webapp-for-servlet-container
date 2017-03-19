@@ -304,7 +304,7 @@ public class BookResourceTest extends JerseyTest {
                 .get();
 
         assertEquals(401, response.getStatus());
-        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
+        assertEquals("Basic", response.getHeaderString("WWW-Authenticate"));
     }
 
     @Test
@@ -322,7 +322,7 @@ public class BookResourceTest extends JerseyTest {
                 .get();
 
         assertEquals(401, response.getStatus());
-        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
+        assertEquals("Basic", response.getHeaderString("WWW-Authenticate"));
     }
 
     @Test
@@ -341,6 +341,6 @@ public class BookResourceTest extends JerseyTest {
                 .get();
 
         assertEquals(401, response.getStatus());
-        assertEquals("Cannot access the resource!", response.getHeaderString("WWW-Authenticate"));
+        assertEquals("Basic", response.getHeaderString("WWW-Authenticate"));
     }
 }

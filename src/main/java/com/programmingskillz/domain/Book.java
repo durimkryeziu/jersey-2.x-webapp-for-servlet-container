@@ -36,7 +36,7 @@ public class Book {
         return id;
     }
 
-    @ApiModelProperty(example = "767a463c-4cc3-48c1-b93e-25c0d216032b")
+    @ApiModelProperty(value = "Book's ID", example = "767a463c-4cc3-48c1-b93e-25c0d216032b")
     public void setId(String id) {
         this.id = id;
     }
@@ -45,7 +45,7 @@ public class Book {
         return title;
     }
 
-    @ApiModelProperty(required = true, example = "Effective Java (2nd Edition)")
+    @ApiModelProperty(value = "Book's Title", required = true, example = "Effective Java (2nd Edition)")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -54,7 +54,7 @@ public class Book {
         return author;
     }
 
-    @ApiModelProperty(required = true, example = "Joshua Bloch")
+    @ApiModelProperty(value = "Book's Author", required = true, example = "Joshua Bloch")
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -63,6 +63,7 @@ public class Book {
         return description;
     }
 
+    @ApiModelProperty("Book's Description")
     public void setDescription(String description) {
         this.description = description;
     }
@@ -71,7 +72,7 @@ public class Book {
         return isbn;
     }
 
-    @ApiModelProperty(required = true, example = "9780321356680")
+    @ApiModelProperty(value = "Book's ISBN number", required = true, example = "9780321356680")
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
@@ -80,7 +81,7 @@ public class Book {
         return pages;
     }
 
-    @ApiModelProperty(required = true, example = "364")
+    @ApiModelProperty(value = "Book's Length", required = true, example = "364")
     public void setPages(Integer pages) {
         this.pages = pages;
     }
@@ -89,6 +90,7 @@ public class Book {
         return publisher;
     }
 
+    @ApiModelProperty("Book's Publisher")
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
@@ -97,7 +99,7 @@ public class Book {
         return published;
     }
 
-    @ApiModelProperty(example = "2008-05-28T00:00:00Z")
+    @ApiModelProperty(value = "Book's Published date", example = "2008-05-28T00:00:00Z")
     public void setPublished(Instant published) {
         this.published = published;
     }
