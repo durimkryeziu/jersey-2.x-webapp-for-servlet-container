@@ -2,6 +2,8 @@
 Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container (i.e. [Tomcat 7+](http://tomcat.apache.org/tomcat-7.0-doc/), [Jetty 8+](http://www.eclipse.org/jetty/documentation/), [GlassFish 3.0.1+](https://glassfish.java.net/documentation.html) etc). 
 It can be used to help you start a Jersey Webapp quickly with very few modifications on the _(NO XML)_ configuration files.
 
+<img width="1013" alt="docs" src="https://cloud.githubusercontent.com/assets/11609385/24085938/8b4d5e3c-0d05-11e7-858f-e04d27ca5b07.png">
+
 ## Overview
 - Based on [Descriptor-less](src/main/webapp) deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
 - Leverages [HikariCP](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
@@ -15,6 +17,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
     `GET /books.json` -- Returns JSON response
     
     `GET /books.xml` -- Returns XML response
+- Utilizes Swagger for documentation
 
 ## Installation
 - `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
@@ -30,6 +33,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - SLF4J: https://www.slf4j.org/manual.html
 - Log4j2: https://logging.apache.org/log4j/2.x/manual/index.html
 - Hibernate Validator: http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/
+- Swagger: https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-Jersey-2.X-Project-Setup-1.5
 
 ## License
 
