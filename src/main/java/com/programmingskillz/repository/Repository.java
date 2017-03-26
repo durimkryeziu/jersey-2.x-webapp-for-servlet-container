@@ -17,6 +17,4 @@ public interface Repository<T> {
     T update(T entity) throws SQLException;
 
     void delete(String id) throws SQLException;
-
-    void deleteAll() throws SQLException;
 }

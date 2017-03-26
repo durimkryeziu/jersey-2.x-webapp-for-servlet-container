@@ -5,7 +5,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 import com.programmingskillz.providers.SampleObjectMapperProvider;
+import com.programmingskillz.repository.DatabaseConfig;
 import io.swagger.jaxrs.config.BeanConfig;
+import org.flywaydb.core.Flyway;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
@@ -29,6 +31,12 @@ public class SampleApplication extends ResourceConfig {
     public SampleApplication() {
         setApplicationName("Jersey RESTful Webapp");
 
+        LOGGER.info("Initializing '{}'...", this.getApplicationName());
+
+        DatabaseConfig.init();
+
+        migrate();
+
         String[] packages = {this.getClass().getPackage().getName(), "io.swagger.jaxrs.listing"};
 
         packages(packages);
@@ -40,12 +48,19 @@ public class SampleApplication extends ResourceConfig {
         register(uriConnegFilter());
         register(LoggingFeature.class);
 
-        setUpSwagger();
-
         property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
         property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_SERVER, "INFO");
         property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_SERVER, LoggingFeature.Verbosity.HEADERS_ONLY);
+
+        setUpSwagger();
+    }
+
+    private void migrate() {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource(DatabaseConfig.getDataSource());
+        flyway.setBaselineOnMigrate(true);
+        flyway.migrate();
     }
 
     private JacksonXMLProvider jacksonXMLProvider() {

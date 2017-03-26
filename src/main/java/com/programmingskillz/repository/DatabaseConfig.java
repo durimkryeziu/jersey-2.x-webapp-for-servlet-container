@@ -5,18 +5,17 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 /**
  * @author Durim Kryeziu
  */
-public class DataSource {
+public class DatabaseConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataSource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
 
     private static HikariDataSource hikariDataSource;
 
@@ -33,11 +32,12 @@ public class DataSource {
         }
 
         HikariConfig config = new HikariConfig(prop);
+
         hikariDataSource = new HikariDataSource(config);
     }
 
-    static synchronized Connection getConnection() throws SQLException {
-        return hikariDataSource.getConnection();
+    public static DataSource getDataSource() {
+        return hikariDataSource;
     }
 
     public static void close() {

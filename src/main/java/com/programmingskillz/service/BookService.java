@@ -18,6 +18,4 @@ public interface BookService {
     Book update(Book entity) throws SQLException;
 
     void delete(String id) throws SQLException;
-
-    void deleteAll() throws SQLException;
 }
