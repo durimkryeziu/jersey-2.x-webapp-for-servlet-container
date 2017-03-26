@@ -1,6 +1,6 @@
 Configuration:
   name: SampleLoggingConfig
-  status: DEBUG
+  status: INFO
 
   Properties:
     Property:
@@ -16,7 +16,7 @@ Configuration:
       name: CONSOLE
       target: SYSTEM_OUT
       PatternLayout:
-        pattern: "%highlight{%d{MMM dd, yyyy HH:mm:ss} %-5level [%t] %c{1}: %msg%n}"
+        pattern: "%highlight{%d{MMM dd, yyyy HH:mm:ss} %-5level [%t] %c{1.}: %msg%n}"
 
     RollingFile:
       - name: INFO_FILE
@@ -70,5 +70,23 @@ Configuration:
           - ref: CONSOLE
           - ref: INFO_FILE
             level: INFO
+          - ref: ERROR_FILE
+            level: ERROR
+
+      - name: org.flywaydb
+        additivity: false
+        level: INFO
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: INFO_FILE
+          - ref: ERROR_FILE
+            level: ERROR
+
+      - name: io.swagger
+        additivity: false
+        level: INFO
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: INFO_FILE
           - ref: ERROR_FILE
             level: ERROR

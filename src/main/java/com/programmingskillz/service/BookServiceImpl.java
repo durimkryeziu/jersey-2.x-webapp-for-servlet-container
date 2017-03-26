@@ -1,7 +1,6 @@
 package com.programmingskillz.service;
 
 import com.programmingskillz.domain.Book;
-import com.programmingskillz.repository.BookRepository;
 import com.programmingskillz.repository.Repository;
 
 import java.sql.SQLException;
@@ -12,7 +11,11 @@ import java.util.List;
  */
 public class BookServiceImpl implements BookService {
 
-    private Repository<Book> repository = new BookRepository();
+    private Repository<Book> repository;
+
+    public BookServiceImpl(Repository<Book> repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Book add(Book entity) throws SQLException {
@@ -37,10 +40,5 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(String id) throws SQLException {
         repository.delete(id);
-    }
-
-    @Override
-    public void deleteAll() throws SQLException {
-        repository.deleteAll();
     }
 }

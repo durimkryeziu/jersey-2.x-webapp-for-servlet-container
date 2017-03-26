@@ -1,6 +1,5 @@
 package com.programmingskillz.providers;
 
-import com.programmingskillz.repository.DataSource;
 import org.glassfish.jersey.server.monitoring.ApplicationEvent;
 import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
@@ -25,9 +24,6 @@ public class SampleApplicationEventListener implements ApplicationEventListener 
         if (applicationEvent.getType().equals(INITIALIZATION_FINISHED)) {
 
             String applicationName = applicationEvent.getResourceConfig().getApplicationName();
-            LOGGER.info("Initializing '{}'...", applicationName);
-
-            DataSource.init();
 
             LOGGER.info("Application '{}' was initialized.", applicationName);
         }

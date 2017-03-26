@@ -22,8 +22,10 @@ public class Book {
     @Size(min = 36, max = 36)
     private String id;
     @NotNull(message = "{book.title.null}")
+    @Size(max = 500)
     private String title;
     @NotNull(message = "{book.author.null}")
+    @Size(max = 255)
     private String author;
     private String description;
     @ValidIsbn

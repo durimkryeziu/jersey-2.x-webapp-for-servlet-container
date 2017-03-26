@@ -5,7 +5,7 @@ import com.programmingskillz.domain.Book;
 import com.programmingskillz.exceptions.ErrorResponse;
 import com.programmingskillz.providers.Compress;
 import com.programmingskillz.service.BookService;
-import com.programmingskillz.service.BookServiceImpl;
+import com.programmingskillz.util.DependenciesFactory;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,11 @@ public class BookResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookResource.class);
 
-    private BookService bookService = new BookServiceImpl();
+    private BookService bookService;
+
+    public BookResource() {
+        bookService = DependenciesFactory.getBookService();
+    }
 
     @GET
     @Compress
@@ -271,19 +275,6 @@ public class BookResource {
 
         LOGGER.debug("Deleting book with id '{}'", id);
         bookService.delete(id);
-
-        return Response.noContent().build();
-    }
-
-    @DELETE
-    @ApiOperation(
-            value = "Delete all books",
-            hidden = true
-    )
-    public Response deleteBooks() throws SQLException {
-
-        LOGGER.debug("Deleting all books");
-        bookService.deleteAll();
 
         return Response.noContent().build();
     }

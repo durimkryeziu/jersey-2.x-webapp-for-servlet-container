@@ -7,8 +7,10 @@ import org.adeptnet.sql.NamedParameterStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
+
+import static com.programmingskillz.util.Utils.toInstant;
+import static com.programmingskillz.util.Utils.toSQLDate;
 
 /**
  * @author Durim Kryeziu
@@ -21,7 +23,7 @@ public class BookRepository implements Repository<Book> {
         String sql = "INSERT INTO books (id, title, author, description, isbn, pages, publisher, published) " +
                 "VALUES(:id, :title, :author, :description, :isbn, :pages, :publisher, :published);";
 
-        try (Connection conn = DataSource.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             entity.setId(UUID.randomUUID().toString());
@@ -34,7 +36,7 @@ public class BookRepository implements Repository<Book> {
             params.put("isbn", entity.getIsbn());
             params.put("pages", entity.getPages());
             params.put("publisher", entity.getPublisher());
-            params.put("published", entity.getPublished() != null ? Timestamp.from(entity.getPublished()) : null);
+            params.put("published", entity.getPublished() != null ? toSQLDate(entity.getPublished()) : null);
             nps.setAll(params);
 
             nps.executeUpdate();
@@ -48,7 +50,7 @@ public class BookRepository implements Repository<Book> {
 
         String sql = "SELECT * FROM books WHERE id = :id";
 
-        try (Connection conn = DataSource.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
             nps.setString("id", id);
 
@@ -62,7 +64,7 @@ public class BookRepository implements Repository<Book> {
                 book.setIsbn(rs.getString("isbn"));
                 book.setPages(rs.getInt("pages"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setPublished(rs.getTimestamp("published") != null ? rs.getTimestamp("published").toInstant() : null);
+                book.setPublished(rs.getDate("published") != null ? toInstant(rs.getDate("published")) : null);
             } else {
                 throw new BookNotFoundException("Book with id '" + id + "' not found.");
             }
@@ -77,7 +79,7 @@ public class BookRepository implements Repository<Book> {
 
         String sql = "SELECT * FROM books";
 
-        try (Connection conn = DataSource.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql);
              ResultSet rs = nps.executeQuery()) {
 
@@ -90,7 +92,7 @@ public class BookRepository implements Repository<Book> {
                 book.setIsbn(rs.getString("isbn"));
                 book.setPages(rs.getInt("pages"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setPublished(rs.getTimestamp("published") != null ? rs.getTimestamp("published").toInstant() : null);
+                book.setPublished(rs.getDate("published") != null ? toInstant(rs.getDate("published")) : null);
                 books.add(book);
             }
         }
@@ -105,7 +107,7 @@ public class BookRepository implements Repository<Book> {
                 "description=:description, isbn=:isbn, pages=:pages, " +
                 "publisher=:publisher, published=:published WHERE id=:id";
 
-        try (Connection conn = DataSource.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             Map<String, Object> params = new HashMap<>();
@@ -116,7 +118,7 @@ public class BookRepository implements Repository<Book> {
             params.put("isbn", entity.getIsbn());
             params.put("pages", entity.getPages());
             params.put("publisher", entity.getPublisher());
-            params.put("published", entity.getPublished() != null ? Timestamp.from(entity.getPublished()) : null);
+            params.put("published", entity.getPublished() != null ? toSQLDate(entity.getPublished()) : null);
             nps.setAll(params);
 
             nps.executeUpdate();
@@ -128,21 +130,10 @@ public class BookRepository implements Repository<Book> {
     public void delete(String id) throws SQLException {
         String sql = "DELETE FROM books WHERE id=:id";
 
-        try (Connection conn = DataSource.getConnection();
+        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             nps.setString("id", id);
-            nps.executeUpdate();
-        }
-    }
-
-    @Override
-    public void deleteAll() throws SQLException {
-        String sql = "DELETE FROM books";
-
-        try (Connection conn = DataSource.getConnection();
-             NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
-
             nps.executeUpdate();
         }
     }

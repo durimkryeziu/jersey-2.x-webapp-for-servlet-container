@@ -9,10 +9,9 @@ import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.message.GZipEncoder;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.*;
@@ -25,8 +24,7 @@ import static org.junit.Assert.*;
 /**
  * @author Durim Kryeziu
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class BookResourceTest extends JerseyTest {
+public class BookResourceIntegrationTest extends JerseyTest {
 
     private String bookId;
     private String authHeaderValue;
@@ -74,7 +72,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test1AddBookWithNecessaryFields() throws Exception {
+    public void testAddBookWithNecessaryFields() throws Exception {
         Book book = new Book();
         book.setTitle("How to Win Friends & Influence People");
         book.setAuthor("Dale Carnegie");
@@ -96,10 +94,12 @@ public class BookResourceTest extends JerseyTest {
         assertEquals("Dale Carnegie", bookResponse.getAuthor());
         assertEquals("067142517X", bookResponse.getIsbn());
         assertEquals(299, bookResponse.getPages().intValue());
+
+        assertEquals(204, cleanUp(bookResponse.getId()).getStatus());
     }
 
     @Test
-    public void test2AddBookFull() throws Exception {
+    public void testAddBookFull() throws Exception {
         Book book = new Book();
         book.setTitle("The Clean Coder: A Code of Conduct for Professional Programmers");
         book.setAuthor("Robert C. Martin");
@@ -137,10 +137,12 @@ public class BookResourceTest extends JerseyTest {
         assertEquals(256, bookResponse.getPages().intValue());
         assertEquals("Prentice Hall", bookResponse.getPublisher());
         assertEquals(date, bookResponse.getPublished());
+
+        assertEquals(204, cleanUp(bookResponse.getId()).getStatus());
     }
 
     @Test
-    public void test3GetOneBook() throws Exception {
+    public void testGetOneBook() throws Exception {
         Response response = target("books")
                 .path(bookId)
                 .request(MediaType.APPLICATION_JSON)
@@ -155,7 +157,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test4GetAllBooks() throws Exception {
+    public void testGetAllBooks() throws Exception {
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
@@ -171,7 +173,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test5UpdateBook() throws Exception {
+    public void testUpdateBook() throws Exception {
         Book book = target("books")
                 .path(bookId)
                 .request(MediaType.APPLICATION_JSON)
@@ -192,7 +194,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test6DeleteOneBook() throws Exception {
+    public void testDeleteOneBook() throws Exception {
         Response response = target("books")
                 .path(bookId)
                 .request()
@@ -211,26 +213,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test7DeleteAllBooks() throws Exception {
-        Response response = target("books")
-                .request()
-                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
-                .delete();
-
-        assertEquals(204, response.getStatus());
-
-        List<Book> books = target("books")
-                .request(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
-                .get(new GenericType<List<Book>>() {
-                });
-
-        assertNotNull(books);
-        assertTrue(books.size() == 0);
-    }
-
-    @Test
-    public void test8RequestBodyNull() throws Exception {
+    public void testRequestBodyNull() throws Exception {
         Response response = target("books")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
@@ -245,7 +228,7 @@ public class BookResourceTest extends JerseyTest {
     }
 
     @Test
-    public void test9UpdateWithoutId() throws Exception {
+    public void testUpdateWithoutId() throws Exception {
         Book book = new Book();
         book.setTitle("Effective Java (2nd Edition)");
         book.setAuthor("Joshua Bloch");
@@ -342,5 +325,18 @@ public class BookResourceTest extends JerseyTest {
 
         assertEquals(401, response.getStatus());
         assertEquals("Basic", response.getHeaderString("WWW-Authenticate"));
+    }
+
+    @After
+    public void deleteBook() throws Exception {
+        cleanUp(this.bookId);
+    }
+
+    private Response cleanUp(String id) {
+        return target("books")
+                .path(id)
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .delete();
     }
 }

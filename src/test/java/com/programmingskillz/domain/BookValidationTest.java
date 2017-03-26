@@ -77,12 +77,7 @@ public class BookValidationTest {
         book.setIsbn(null);
 
         violations = validator.validate(book);
-
-        List<ConstraintViolation<Book>> violationList = new ArrayList<>();
-        for (ConstraintViolation<Book> violation : violations) {
-            violationList.add(violation);
-        }
-        violationList.sort((v1, v2) -> v1.getMessage().compareTo(v2.getMessage()));
+        List<ConstraintViolation<Book>> violationList = getSortedConstraintViolations();
 
         assertEquals(2, this.violations.size());
         assertEquals("Book's isbn cannot be null.", violationList.get(0).getMessage());
@@ -94,12 +89,7 @@ public class BookValidationTest {
         book.setIsbn("12345");
 
         violations = validator.validate(book);
-
-        List<ConstraintViolation<Book>> violationList = new ArrayList<>();
-        for (ConstraintViolation<Book> violation : violations) {
-            violationList.add(violation);
-        }
-        violationList.sort((v1, v2) -> v1.getMessage().compareTo(v2.getMessage()));
+        List<ConstraintViolation<Book>> violationList = getSortedConstraintViolations();
 
         assertEquals(2, this.violations.size());
         assertEquals("Book's isbn must be between 10 and 17 characters", violationList.get(0).getMessage());
@@ -111,12 +101,7 @@ public class BookValidationTest {
         book.setIsbn("1234567890ABCDEFGH");
 
         violations = validator.validate(book);
-
-        List<ConstraintViolation<Book>> violationList = new ArrayList<>();
-        for (ConstraintViolation<Book> violation : violations) {
-            violationList.add(violation);
-        }
-        violationList.sort((v1, v2) -> v1.getMessage().compareTo(v2.getMessage()));
+        List<ConstraintViolation<Book>> violationList = getSortedConstraintViolations();
 
         assertEquals(2, this.violations.size());
         assertEquals("Book's isbn must be between 10 and 17 characters", violationList.get(0).getMessage());
@@ -139,5 +124,12 @@ public class BookValidationTest {
         violations = validator.validate(book);
         assertEquals(1, violations.size());
         assertEquals("Pages value must be less than or equal to 32767", violations.iterator().next().getMessage());
+    }
+
+    private List<ConstraintViolation<Book>> getSortedConstraintViolations() {
+        List<ConstraintViolation<Book>> violationList = new ArrayList<>();
+        violationList.addAll(violations);
+        violationList.sort((v1, v2) -> v1.getMessage().compareTo(v2.getMessage()));
+        return violationList;
     }
 }
