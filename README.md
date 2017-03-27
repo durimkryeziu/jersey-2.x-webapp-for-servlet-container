@@ -5,11 +5,11 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 <img width="1013" alt="docs" src="https://cloud.githubusercontent.com/assets/11609385/24085938/8b4d5e3c-0d05-11e7-858f-e04d27ca5b07.png">
 
 ## Overview
-- Based on [Descriptor-less](src/main/webapp) deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
-- Leverages [HikariCP](src/main/java/com/programmingskillz/repository/DataSource.java) to connect with H2 database (Embedded)
+- Based on Descriptor-less deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
+- Leverages [HikariCP](src/main/java/com/programmingskillz/repository/DatabaseConfig.java) to connect with H2 database (Embedded)
 - Uses _YAML_ syntax for [Log4j2](src/main/resources/log4j2.yml) configuration file
 - Uses [Jackson](src/main/java/com/programmingskillz/providers/SampleObjectMapperProvider.java) Library for data-binding
-- Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceTest.java) for testing
+- Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceIntegrationTest.java) for testing
 - Validations are based on [Bean Validation](http://beanvalidation.org/). Uses both [Built-in](src/main/java/com/programmingskillz/domain/Book.java) constraints and [Custom](src/main/java/com/programmingskillz/constraint/ValidIsbn.java) constraints
 - Utilizes Jersey Filters to support [Basic Authentication](src/main/java/com/programmingskillz/providers/AuthFilter.java)
 - Supports _URI-based_ content negotiation for **JSON** and **XML**
@@ -23,7 +23,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
 - Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
 - Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
-- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/resource/BookResourceTest.java)
+- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz)
 - Get the **war** file and deploy it on your favorite Servlet Container and you will be all set up. 
 
 ## References
@@ -34,6 +34,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Log4j2: https://logging.apache.org/log4j/2.x/manual/index.html
 - Hibernate Validator: http://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/
 - Swagger: https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-Jersey-2.X-Project-Setup-1.5
+- Flyway: https://flywaydb.org/documentation/
 
 ## License
 
