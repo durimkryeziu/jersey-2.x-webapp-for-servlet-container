@@ -7,6 +7,7 @@ import com.programmingskillz.providers.Compress;
 import com.programmingskillz.service.BookService;
 import com.programmingskillz.util.DependenciesFactory;
 import io.swagger.annotations.*;
+import org.glassfish.jersey.server.validation.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,7 +153,8 @@ public class BookResource {
             ),
             @ApiResponse(
                     code = 400,
-                    message = "Bad request"
+                    message = "Bad request",
+                    response = ValidationError.class
             ),
             @ApiResponse(
                     code = 401,
@@ -201,7 +203,8 @@ public class BookResource {
             ),
             @ApiResponse(
                     code = 400,
-                    message = "Bad request"
+                    message = "Bad request",
+                    response = ValidationError.class
             ),
             @ApiResponse(
                     code = 401,
