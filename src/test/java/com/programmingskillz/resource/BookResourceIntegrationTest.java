@@ -10,15 +10,18 @@ import org.glassfish.jersey.message.GZipEncoder;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.*;
+import java.io.File;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.List;
 
+import static com.programmingskillz.util.Utils.deleteDir;
 import static org.junit.Assert.*;
 
 /**
@@ -338,5 +341,16 @@ public class BookResourceIntegrationTest extends JerseyTest {
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
                 .delete();
+    }
+
+    /**
+     * Cleans up the logs folder created in this directory while doing
+     * integration tests when CATALINA_HOME environment variables is missing
+     * during build time.
+     */
+    @AfterClass
+    public static void cleanUp() throws Exception {
+        File logs = new File("${env:CATALINA_HOME}");
+        deleteDir(logs);
     }
 }

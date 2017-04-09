@@ -2,7 +2,7 @@ package com.programmingskillz.resource;
 
 import com.programmingskillz.constraint.ValidBookToUpdate;
 import com.programmingskillz.domain.Book;
-import com.programmingskillz.exceptions.ErrorResponse;
+import com.programmingskillz.exception.ErrorResponse;
 import com.programmingskillz.providers.Compress;
 import com.programmingskillz.service.BookService;
 import com.programmingskillz.util.DependenciesFactory;

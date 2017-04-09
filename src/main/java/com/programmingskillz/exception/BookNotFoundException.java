@@ -1,4 +1,4 @@
-package com.programmingskillz.exceptions;
+package com.programmingskillz.exception;
 
 /**
  * @author Durim Kryeziu

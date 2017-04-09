@@ -1,7 +1,7 @@
 package com.programmingskillz.repository;
 
 import com.programmingskillz.domain.Book;
-import com.programmingskillz.exceptions.BookNotFoundException;
+import com.programmingskillz.exception.BookNotFoundException;
 import org.adeptnet.sql.NamedParameterStatement;
 
 import java.sql.Connection;

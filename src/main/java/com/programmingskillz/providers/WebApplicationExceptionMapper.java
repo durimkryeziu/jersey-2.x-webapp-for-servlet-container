@@ -1,6 +1,6 @@
 package com.programmingskillz.providers;
 
-import com.programmingskillz.exceptions.ErrorResponse;
+import com.programmingskillz.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

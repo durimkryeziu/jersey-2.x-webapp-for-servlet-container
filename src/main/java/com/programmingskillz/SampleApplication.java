@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author Durim Kryeziu
  */
-@ApplicationPath("webapi")
+@ApplicationPath("api")
 public class SampleApplication extends ResourceConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SampleApplication.class);
@@ -90,8 +90,7 @@ public class SampleApplication extends ResourceConfig {
         beanConfig.setLicenseUrl("http://unlicense.org");
         beanConfig.setVersion("1.0.0");
         beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:9999");
-        beanConfig.setBasePath("webapi");
+        beanConfig.setBasePath("api");
         beanConfig.setResourcePackage("com.programmingskillz.resource");
         beanConfig.setScan(true);
         beanConfig.setPrettyPrint(true);

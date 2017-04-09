@@ -1,6 +1,6 @@
 package com.programmingskillz.providers;
 
-import com.programmingskillz.exceptions.ErrorResponse;
+import com.programmingskillz.exception.ErrorResponse;
 import org.glassfish.jersey.server.validation.ValidationError;
 import org.glassfish.jersey.server.validation.internal.ValidationHelper;
 import org.slf4j.Logger;
