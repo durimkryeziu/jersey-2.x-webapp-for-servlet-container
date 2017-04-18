@@ -6,10 +6,10 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 
 ## Overview
 - Based on Descriptor-less deployment [option](src/main/java/com/programmingskillz/SampleApplication.java) (No JAX-RS Deployment descriptor)
-- Leverages [HikariCP](src/main/java/com/programmingskillz/samplejerseywebapp/data/repository/DatabaseConfig.java) to connect with H2 database (Embedded)
+- Leverages [HikariCP](src/main/java/com/programmingskillz/samplejerseywebapp/data/DatabaseConfig.java) to connect with H2 database (Embedded)
 - Uses _YAML_ syntax for [Log4j2](src/main/resources/log4j2.yml) configuration file
 - Uses [Jackson](src/main/java/com/programmingskillz/samplejerseywebapp/config/providers/SampleObjectMapperProvider.java) Library for data-binding
-- Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/resource/BookResourceIntegrationTest.java) for testing
+- Leverages [Jersey Test Framework](src/test/java/com/programmingskillz/samplejerseywebapp/web/BookResourceIntegrationTest.java) for testing
 - Validations are based on [Bean Validation](http://beanvalidation.org/). Uses both [Built-in](src/main/java/com/programmingskillz/samplejerseywebapp/business/domain/Book.java) constraints and [Custom](src/main/java/com/programmingskillz/samplejerseywebapp/business/constraint/ValidIsbn.java) constraints
 - Utilizes Jersey Filters to support [Basic Authentication](src/main/java/com/programmingskillz/samplejerseywebapp/config/providers/AuthFilter.java)
 - Supports _URI-based_ content negotiation for **JSON** and **XML**
@@ -23,7 +23,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
 - Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
 - Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
-- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz)
+- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/samplejerseywebapp)
 - Deploy the **war** file on your favorite Servlet Container and you will be all set up. 
 - Username and Password for accessing API using **Basic Auth** are: `durimkryeziu:password`
 
