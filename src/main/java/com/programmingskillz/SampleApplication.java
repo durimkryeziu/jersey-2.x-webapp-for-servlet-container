@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
-import com.programmingskillz.providers.SampleObjectMapperProvider;
-import com.programmingskillz.repository.DatabaseConfig;
+import com.programmingskillz.samplejerseywebapp.config.providers.SampleObjectMapperProvider;
+import com.programmingskillz.samplejerseywebapp.data.DatabaseConfig;
 import io.swagger.jaxrs.config.BeanConfig;
 import org.flywaydb.core.Flyway;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -91,7 +91,7 @@ public class SampleApplication extends ResourceConfig {
         beanConfig.setVersion("1.0.0");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setBasePath("api");
-        beanConfig.setResourcePackage("com.programmingskillz.resource");
+        beanConfig.setResourcePackage("com.programmingskillz.samplejerseywebapp.web");
         beanConfig.setScan(true);
         beanConfig.setPrettyPrint(true);
     }
