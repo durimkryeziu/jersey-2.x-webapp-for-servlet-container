@@ -3,8 +3,8 @@ package com.programmingskillz.samplejerseywebapp.web;
 import com.programmingskillz.samplejerseywebapp.business.constraint.ValidBookToUpdate;
 import com.programmingskillz.samplejerseywebapp.business.domain.Book;
 import com.programmingskillz.samplejerseywebapp.business.exception.ErrorResponse;
-import com.programmingskillz.samplejerseywebapp.config.providers.Compress;
 import com.programmingskillz.samplejerseywebapp.business.service.BookService;
+import com.programmingskillz.samplejerseywebapp.config.providers.Compress;
 import com.programmingskillz.samplejerseywebapp.util.DependenciesFactory;
 import io.swagger.annotations.*;
 import org.glassfish.jersey.server.validation.ValidationError;
@@ -188,9 +188,7 @@ public class BookResource {
     }
 
     @PUT
-    @Compress
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({APPLICATION_JSON, APPLICATION_XML})
     @ApiOperation(
             value = "Update an existing book",
             response = Book.class
@@ -198,8 +196,7 @@ public class BookResource {
     @ApiResponses({
             @ApiResponse(
                     code = 200,
-                    message = "Book updated successfully",
-                    response = Book.class
+                    message = "Book updated successfully"
             ),
             @ApiResponse(
                     code = 400,
@@ -233,7 +230,7 @@ public class BookResource {
         LOGGER.debug("Updating book {}", book);
         Book updatedBook = bookService.update(book);
 
-        return Response.ok(updatedBook).build();
+        return Response.ok().build();
     }
 
     @DELETE
