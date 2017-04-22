@@ -191,7 +191,11 @@ public class BookResourceIntegrationTest extends JerseyTest {
 
         assertEquals(200, response.getStatus());
 
-        Book updatedBook = response.readEntity(Book.class);
+        Book updatedBook = target("books")
+                .path(bookId)
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, authHeaderValue)
+                .get(Book.class);
 
         assertEquals(book, updatedBook);
     }
