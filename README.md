@@ -20,12 +20,17 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 - Utilizes Swagger for documentation
 
 ## Installation
-- `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
-- Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
-- Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
-- `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/samplejerseywebapp)
-- Deploy the **war** file on your favorite Servlet Container and you will be all set up. 
-- Username and Password for accessing API using **Basic Auth** are: `durimkryeziu:password`
+:one: `git clone https://github.com/durimkryeziu/jersey-2.x-webapp-servlet-container.git`
+
+:two: Point **CATALINA_HOME** environment variable to your Servlet Container for [log](src/main/resources/log4j2.yml#L8) files
+
+:three: Close all other connections to the embedded mode H2 Database if any or modify the [**hikari.properties**](src/main/resources/hikari.properties) file to use the server mode
+
+:four: `mvn clean install` or `mvn -Dmaven.test.skip=true clean install` to skip [tests](src/test/java/com/programmingskillz/samplejerseywebapp)
+
+:five: Deploy the **war** file on your favorite Servlet Container and you will be all set up. 
+
+:six: Username and Password for accessing API using **Basic Auth** are: `durimkryeziu:password`
 
 ## References
 - Jersey doc: https://jersey.java.net/documentation/latest/index.html
