@@ -55,21 +55,22 @@ public class BookRepository implements Repository<Book> {
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
             nps.setString("id", id);
 
-            ResultSet rs = nps.executeQuery();
-            if (rs.next()) {
-                book = new Book();
-                book.setId(id);
-                book.setTitle(rs.getString("title"));
-                book.setAuthor(rs.getString("author"));
-                book.setDescription(rs.getString("description"));
-                book.setIsbn(rs.getString("isbn"));
-                book.setPages(rs.getInt("pages"));
-                book.setPublisher(rs.getString("publisher"));
-                book.setPublished(rs.getDate("published") != null ? toInstant(rs.getDate("published")) : null);
-            } else {
-                throw new BookNotFoundException("Book with id '" + id + "' not found.");
+            try (ResultSet rs = nps.executeQuery()) {
+                if (rs.next()) {
+                    book = new Book();
+                    book.setId(id);
+                    book.setTitle(rs.getString("title"));
+                    book.setAuthor(rs.getString("author"));
+                    book.setDescription(rs.getString("description"));
+                    book.setIsbn(rs.getString("isbn"));
+                    book.setPages(rs.getInt("pages"));
+                    book.setPublisher(rs.getString("publisher"));
+                    book.setPublished(rs.getDate("published") != null ? toInstant(rs.getDate("published")) : null);
+                } else {
+                    throw new BookNotFoundException("Book with id '" + id + "' not found.");
+                }
             }
-            rs.close();
+
             return book;
         }
     }
