@@ -1,6 +1,6 @@
 package com.programmingskillz.samplejerseywebapp.config.providers;
 
-import com.programmingskillz.samplejerseywebapp.data.DatabaseConfig;
+import com.programmingskillz.samplejerseywebapp.data.DataSource;
 import org.glassfish.jersey.server.monitoring.ApplicationInfo;
 import org.glassfish.jersey.server.monitoring.DestroyListener;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class SampleApplicationDestroyListener implements DestroyListener {
 
         ApplicationInfo applicationInfo = applicationInfoProvider.get();
 
-        DatabaseConfig.close();
+        DataSource.getInstance().close();
 
         deregisterJdbcDrivers();
 

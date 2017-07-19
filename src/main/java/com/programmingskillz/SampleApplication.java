@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 import com.programmingskillz.samplejerseywebapp.config.providers.SampleObjectMapperProvider;
-import com.programmingskillz.samplejerseywebapp.data.DatabaseConfig;
+import com.programmingskillz.samplejerseywebapp.data.DataSource;
 import io.swagger.jaxrs.config.BeanConfig;
 import org.flywaydb.core.Flyway;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -33,8 +33,6 @@ public class SampleApplication extends ResourceConfig {
 
         LOGGER.info("Initializing '{}'...", this.getApplicationName());
 
-        DatabaseConfig.init();
-
         migrate();
 
         String[] packages = {this.getClass().getPackage().getName(), "io.swagger.jaxrs.listing"};
@@ -58,7 +56,7 @@ public class SampleApplication extends ResourceConfig {
 
     private void migrate() {
         Flyway flyway = new Flyway();
-        flyway.setDataSource(DatabaseConfig.getDataSource());
+        flyway.setDataSource(DataSource.getInstance());
         flyway.setBaselineOnMigrate(true);
         flyway.migrate();
     }

@@ -2,7 +2,7 @@ package com.programmingskillz.samplejerseywebapp.data.repository;
 
 import com.programmingskillz.samplejerseywebapp.business.domain.Book;
 import com.programmingskillz.samplejerseywebapp.business.exception.BookNotFoundException;
-import com.programmingskillz.samplejerseywebapp.data.DatabaseConfig;
+import com.programmingskillz.samplejerseywebapp.data.DataSource;
 import org.adeptnet.sql.NamedParameterStatement;
 
 import java.sql.Connection;
@@ -20,11 +20,10 @@ public class BookRepository implements Repository<Book> {
 
     @Override
     public Book save(Book entity) throws SQLException {
-
         String sql = "INSERT INTO books (id, title, author, description, isbn, pages, publisher, published) " +
                 "VALUES(:id, :title, :author, :description, :isbn, :pages, :publisher, :published);";
 
-        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+        try (Connection conn = DataSource.getInstance().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             entity.setId(UUID.randomUUID().toString());
@@ -47,17 +46,15 @@ public class BookRepository implements Repository<Book> {
 
     @Override
     public Book findOne(String id) throws SQLException {
-        Book book;
-
         String sql = "SELECT * FROM books WHERE id = :id";
 
-        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+        try (Connection conn = DataSource.getInstance().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
             nps.setString("id", id);
 
             try (ResultSet rs = nps.executeQuery()) {
                 if (rs.next()) {
-                    book = new Book();
+                    Book book = new Book();
                     book.setId(id);
                     book.setTitle(rs.getString("title"));
                     book.setAuthor(rs.getString("author"));
@@ -66,12 +63,11 @@ public class BookRepository implements Repository<Book> {
                     book.setPages(rs.getInt("pages"));
                     book.setPublisher(rs.getString("publisher"));
                     book.setPublished(rs.getDate("published") != null ? toInstant(rs.getDate("published")) : null);
+                    return book;
                 } else {
                     throw new BookNotFoundException("Book with id '" + id + "' not found.");
                 }
             }
-
-            return book;
         }
     }
 
@@ -81,7 +77,7 @@ public class BookRepository implements Repository<Book> {
 
         String sql = "SELECT * FROM books";
 
-        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+        try (Connection conn = DataSource.getInstance().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql);
              ResultSet rs = nps.executeQuery()) {
 
@@ -98,18 +94,16 @@ public class BookRepository implements Repository<Book> {
                 books.add(book);
             }
         }
-
         return books;
     }
 
     @Override
     public Book update(Book entity) throws SQLException {
-
         String sql = "UPDATE books SET title=:title, author=:author, " +
                 "description=:description, isbn=:isbn, pages=:pages, " +
                 "publisher=:publisher, published=:published WHERE id=:id";
 
-        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+        try (Connection conn = DataSource.getInstance().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
 
             Map<String, Object> params = new HashMap<>();
@@ -132,9 +126,8 @@ public class BookRepository implements Repository<Book> {
     public void delete(String id) throws SQLException {
         String sql = "DELETE FROM books WHERE id=:id";
 
-        try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+        try (Connection conn = DataSource.getInstance().getConnection();
              NamedParameterStatement nps = new NamedParameterStatement(conn, sql)) {
-
             nps.setString("id", id);
             nps.executeUpdate();
         }
