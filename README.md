@@ -33,7 +33,7 @@ It can be used to help you start a Jersey Webapp quickly with very few modificat
 :six: Username and Password for accessing API using **Basic Auth** are: `durimkryeziu:password`
 
 ## References
-- Jersey doc: https://jersey.java.net/documentation/latest/index.html
+- Jersey doc: https://jersey.github.io/documentation/latest/index.html
 - HikariCP: http://http://brettwooldridge.github.io/HikariCP/
 - H2 Database: http://www.h2database.com/html/features.html#embedded_databases
 - SLF4J: https://www.slf4j.org/manual.html
