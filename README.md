@@ -1,4 +1,7 @@
-# Sample Jersey 2.x RESTful Web Application [![Build Status](https://travis-ci.org/durimkryeziu/jersey-2.x-webapp-for-servlet-container.svg?branch=master)](https://travis-ci.org/durimkryeziu/jersey-2.x-webapp-for-servlet-container)
+# Sample Jersey 2.x RESTful Web Application 
+
+[![Travis branch](https://img.shields.io/travis/durimkryeziu/jersey-2.x-webapp-for-servlet-container/master.svg?style=flat-square)](https://travis-ci.org/durimkryeziu/jersey-2.x-webapp-for-servlet-container) [![Coveralls branch](https://img.shields.io/coveralls/durimkryeziu/jersey-2.x-webapp-for-servlet-container/master.svg?style=flat-square)](https://coveralls.io/github/durimkryeziu/jersey-2.x-webapp-for-servlet-container?branch=master) [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg?style=flat-square)](http://unlicense.org/)
+
 Sample Jersey 2.x RESTful Web Application that can be deployed in a Servlet 3.0 Container (i.e. [Tomcat 7+](http://tomcat.apache.org/tomcat-7.0-doc/), [Jetty 8+](http://www.eclipse.org/jetty/documentation/), [GlassFish 3.0.1+](https://glassfish.java.net/documentation.html) etc). 
 It can be used to help you start a Jersey Webapp quickly with very few modifications on the _(NO XML)_ configuration files.
 
