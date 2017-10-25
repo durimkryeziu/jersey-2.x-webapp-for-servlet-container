@@ -15,10 +15,10 @@ import org.glassfish.jersey.server.filter.UriConnegFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Durim Kryeziu
@@ -26,71 +26,74 @@ import java.util.Map;
 @ApplicationPath("api")
 public class SampleApplication extends ResourceConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SampleApplication.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SampleApplication.class);
 
-    public SampleApplication() {
-        setApplicationName("Jersey RESTful Webapp");
+  public SampleApplication() {
+    setApplicationName("Jersey RESTful Webapp");
 
-        LOGGER.info("Initializing '{}'...", this.getApplicationName());
+    LOGGER.info("Initializing '{}'...", this.getApplicationName());
 
-        migrate();
+    migrate();
 
-        String[] packages = {this.getClass().getPackage().getName(), "io.swagger.jaxrs.listing"};
+    String[] packages = {this.getClass().getPackage().getName(), "io.swagger.jaxrs.listing"};
 
-        packages(packages);
+    packages(packages);
 
-        LOGGER.debug("Registering JAX-RS Components...");
+    LOGGER.debug("Registering JAX-RS Components...");
 
-        register(SampleObjectMapperProvider.class);
-        register(jacksonXMLProvider());
-        register(uriConnegFilter());
-        register(LoggingFeature.class);
+    register(SampleObjectMapperProvider.class);
+    register(jacksonXMLProvider());
+    register(uriConnegFilter());
+    register(LoggingFeature.class);
 
-        property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
-        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
-        property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_SERVER, "INFO");
-        property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_SERVER, LoggingFeature.Verbosity.HEADERS_ONLY);
+    property(ServerProperties.MONITORING_ENABLED, Boolean.TRUE);
+    property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, Boolean.TRUE);
+    property(LoggingFeature.LOGGING_FEATURE_LOGGER_LEVEL_SERVER, "INFO");
+    property(LoggingFeature.LOGGING_FEATURE_VERBOSITY_SERVER,
+        LoggingFeature.Verbosity.HEADERS_ONLY);
 
-        setUpSwagger();
-    }
+    setUpSwagger();
+  }
 
-    private void migrate() {
-        Flyway flyway = new Flyway();
-        flyway.setDataSource(DataSource.getInstance());
-        flyway.setBaselineOnMigrate(true);
-        flyway.migrate();
-    }
+  private void migrate() {
+    Flyway flyway = new Flyway();
+    flyway.setDataSource(DataSource.getInstance());
+    flyway.setBaselineOnMigrate(true);
+    flyway.migrate();
+  }
 
-    private JacksonXMLProvider jacksonXMLProvider() {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.registerModule(new JavaTimeModule());
+  private JacksonXMLProvider jacksonXMLProvider() {
+    XmlMapper xmlMapper = new XmlMapper();
+    xmlMapper.registerModule(new JavaTimeModule());
 
-        JacksonXMLProvider xmlProvider = new JacksonXMLProvider();
+    JacksonXMLProvider xmlProvider = new JacksonXMLProvider();
 
-        xmlProvider.setMapper(xmlMapper);
-        xmlProvider.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return xmlProvider;
-    }
+    xmlProvider.setMapper(xmlMapper);
+    xmlProvider.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    return xmlProvider;
+  }
 
-    private UriConnegFilter uriConnegFilter() {
-        Map<String, MediaType> mediaTypeMappings = new HashMap<>();
-        mediaTypeMappings.put("xml", MediaType.APPLICATION_XML_TYPE);
-        mediaTypeMappings.put("json", MediaType.APPLICATION_JSON_TYPE);
+  private UriConnegFilter uriConnegFilter() {
+    Map<String, MediaType> mediaTypeMappings = new HashMap<>();
+    mediaTypeMappings.put("xml", MediaType.APPLICATION_XML_TYPE);
+    mediaTypeMappings.put("json", MediaType.APPLICATION_JSON_TYPE);
 
-        return new UriConnegFilter(mediaTypeMappings, null);
-    }
+    return new UriConnegFilter(mediaTypeMappings, null);
+  }
 
-    private void setUpSwagger() {
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setTitle("Sample Jersey 2.x RESTful Web Application");
-        beanConfig.setDescription("Sample Jersey 2.x Web Application that can be deployed in a Servlet Container");
-        beanConfig.setLicense("Unlicense");
-        beanConfig.setLicenseUrl("http://unlicense.org");
-        beanConfig.setVersion("1.0.0");
-        beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setBasePath("api");
-        beanConfig.setResourcePackage("com.programmingskillz.samplejerseywebapp.web");
-        beanConfig.setScan(true);
-        beanConfig.setPrettyPrint(true);
-    }
+  private void setUpSwagger() {
+    BeanConfig beanConfig = new BeanConfig();
+    beanConfig.setTitle("Sample Jersey 2.x RESTful Web Application");
+    beanConfig.setDescription(
+        "Sample Jersey 2.x Web Application that can be deployed in a Servlet Container"
+    );
+    beanConfig.setLicense("Unlicense");
+    beanConfig.setLicenseUrl("http://unlicense.org");
+    beanConfig.setVersion("1.0.0");
+    beanConfig.setSchemes(new String[]{"http"});
+    beanConfig.setBasePath("api");
+    beanConfig.setResourcePackage("com.programmingskillz.samplejerseywebapp.web");
+    beanConfig.setScan(true);
+    beanConfig.setPrettyPrint(true);
+  }
 }

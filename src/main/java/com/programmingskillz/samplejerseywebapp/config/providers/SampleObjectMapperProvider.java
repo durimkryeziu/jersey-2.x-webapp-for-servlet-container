@@ -11,17 +11,17 @@ import javax.ws.rs.ext.ContextResolver;
  */
 public class SampleObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
-    private final ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-    public SampleObjectMapperProvider() {
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        this.objectMapper.registerModule(new JavaTimeModule());
-    }
+  public SampleObjectMapperProvider() {
+    this.objectMapper = new ObjectMapper();
+    this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    this.objectMapper.registerModule(new JavaTimeModule());
+  }
 
-    @Override
-    public ObjectMapper getContext(Class<?> type) {
-        return this.objectMapper;
-    }
+  @Override
+  public ObjectMapper getContext(Class<?> type) {
+    return this.objectMapper;
+  }
 }

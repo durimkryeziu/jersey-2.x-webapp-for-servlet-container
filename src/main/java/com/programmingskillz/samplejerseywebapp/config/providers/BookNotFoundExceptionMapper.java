@@ -16,23 +16,23 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class BookNotFoundExceptionMapper implements ExceptionMapper<BookNotFoundException> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookNotFoundExceptionMapper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BookNotFoundExceptionMapper.class);
 
-    @Override
-    public Response toResponse(BookNotFoundException exception) {
+  @Override
+  public Response toResponse(BookNotFoundException exception) {
 
-        LOGGER.error("BookNotFoundException:", exception);
-        LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
-        Response.Status status = Response.Status.NOT_FOUND;
+    LOGGER.error("BookNotFoundException:", exception);
+    LOGGER.debug("Constructing Error Response for: [{}]", exception.toString());
+    Response.Status status = Response.Status.NOT_FOUND;
 
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(status.getStatusCode());
-        errorResponse.setStatus(status.getReasonPhrase());
-        errorResponse.setMessage(exception.getMessage());
+    ErrorResponse errorResponse = new ErrorResponse();
+    errorResponse.setCode(status.getStatusCode());
+    errorResponse.setStatus(status.getReasonPhrase());
+    errorResponse.setMessage(exception.getMessage());
 
-        return Response.status(status)
-                .entity(errorResponse)
-                .type(MediaType.APPLICATION_JSON)
-                .build();
-    }
+    return Response.status(status)
+        .entity(errorResponse)
+        .type(MediaType.APPLICATION_JSON)
+        .build();
+  }
 }

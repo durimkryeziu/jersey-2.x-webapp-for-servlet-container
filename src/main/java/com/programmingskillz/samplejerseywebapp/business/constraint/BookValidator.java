@@ -10,18 +10,18 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class BookValidator implements ConstraintValidator<ValidBookToUpdate, Book> {
 
-    @Override
-    public void initialize(ValidBookToUpdate validBookToUpdate) {
+  @Override
+  public void initialize(ValidBookToUpdate validBookToUpdate) {
+    // Nothing needed here in our case
+  }
 
+  @Override
+  public boolean isValid(Book book, ConstraintValidatorContext constraintValidatorContext) {
+
+    if (book == null) {
+      return true; // Bean Validation specification recommends to consider null values as being valid
     }
 
-    @Override
-    public boolean isValid(Book book, ConstraintValidatorContext constraintValidatorContext) {
-
-        if (book == null) {
-            return true; // Bean Validation specification recommends to consider null values as being valid
-        }
-
-        return book.getId() != null;
-    }
+    return book.getId() != null;
+  }
 }

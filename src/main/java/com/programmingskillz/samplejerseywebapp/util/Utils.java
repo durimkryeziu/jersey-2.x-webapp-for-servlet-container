@@ -13,25 +13,29 @@ import java.time.ZoneOffset;
  */
 public class Utils {
 
-    public static Instant toInstant(Date date) {
-        return date.toLocalDate().atStartOfDay(ZoneOffset.UTC).toInstant();
-    }
+  private Utils() {
+    throw new IllegalStateException("Utility class");
+  }
 
-    public static Date toSQLDate(Instant instant) {
-        return Date.valueOf(instant.atZone(ZoneId.ofOffset("", ZoneOffset.UTC)).toLocalDate());
-    }
+  public static Instant toInstant(Date date) {
+    return date.toLocalDate().atStartOfDay(ZoneOffset.UTC).toInstant();
+  }
 
-    public static void deleteDir(File file) {
-        File[] files = file.listFiles();
-        if (files != null) {
-            for (File temp : files) {
-                deleteDir(temp);
-            }
-        }
-        try {
-            Files.deleteIfExists(file.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  public static Date toSQLDate(Instant instant) {
+    return Date.valueOf(instant.atZone(ZoneId.ofOffset("", ZoneOffset.UTC)).toLocalDate());
+  }
+
+  public static void deleteDir(File file) {
+    File[] files = file.listFiles();
+    if (files != null) {
+      for (File temp : files) {
+        deleteDir(temp);
+      }
     }
+    try {
+      Files.deleteIfExists(file.toPath());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

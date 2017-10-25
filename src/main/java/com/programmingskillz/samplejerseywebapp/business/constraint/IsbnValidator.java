@@ -10,14 +10,14 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class IsbnValidator implements ConstraintValidator<ValidIsbn, String> {
 
-    @Override
-    public void initialize(ValidIsbn validIsbn) {
+  @Override
+  public void initialize(ValidIsbn validIsbn) {
+    // Nothing needed here in our case
+  }
 
-    }
+  @Override
+  public boolean isValid(String isbnCode, ConstraintValidatorContext constraintValidatorContext) {
 
-    @Override
-    public boolean isValid(String isbnCode, ConstraintValidatorContext constraintValidatorContext) {
-
-        return ISBNValidator.getInstance().isValid(isbnCode);
-    }
+    return ISBNValidator.getInstance().isValid(isbnCode);
+  }
 }
