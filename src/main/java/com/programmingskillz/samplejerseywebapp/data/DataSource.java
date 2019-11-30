@@ -8,7 +8,7 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class DataSource extends HikariDataSource {
 
-  private static DataSource instance;
+  private static volatile DataSource instance;
 
   private DataSource() {
     super(new HikariConfig("/hikari.properties"));
